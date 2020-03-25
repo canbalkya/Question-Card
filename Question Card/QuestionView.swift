@@ -45,22 +45,26 @@ struct AnswerView: View {
 struct QuestionView: View {
     let row: Row
     @State private var dragAmount = CGSize.zero
+    @State private var opacityAmount = 1.0
     
     var body: some View {
         VStack {
             AnswerView(text: String(row.answers))
             AnswerView(text: String(row.falseAnswers[0]))
-            
+
             CardView(text: self.row.questions)
+                .opacity(opacityAmount)
                 .offset(dragAmount)
                 .gesture(DragGesture().onChanged {
                     self.dragAmount = $0.translation
+                    self.opacityAmount = 0.4
                 }.onEnded { _ in
                     withAnimation(.spring()) {
                         self.dragAmount = .zero
+                        self.opacityAmount = 1.0
                     }
                 })
-            
+
             AnswerView(text: String(row.falseAnswers[1]))
             AnswerView(text: String(row.falseAnswers[2]))
         }
