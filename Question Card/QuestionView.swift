@@ -39,6 +39,7 @@ struct AnswerView: View {
             RoundedRectangle(cornerRadius: 16)
                 .frame(width: 270, height: 60)
                 .foregroundColor(color)
+                .animation(.default)
             
             Text(text)
                 .font(.system(size: 30))
@@ -51,14 +52,13 @@ struct AnswerView: View {
 struct QuestionView: View {
     let row: Row
     @State private var dragAmount = CGSize.zero
-    @State private var yAmount: CGFloat = 0
     @State private var opacityAmount = 1.0
     @State private var chosenAnswer = 0
     
     var body: some View {
         VStack {
-            AnswerView(text: String(row.answers), color: chosenAnswer == 1 ? Color.red : Color.answerGray)
-            AnswerView(text: String(row.falseAnswers[0]), color: chosenAnswer == 2 ? Color.red : Color.answerGray)
+            AnswerView(text: String(row.answers), color: chosenAnswer == 1 ? Color.cardGray : Color.answerGray)
+            AnswerView(text: String(row.falseAnswers[0]), color: chosenAnswer == 2 ? Color.cardGray : Color.answerGray)
 
             CardView(text: self.row.questions)
                 .opacity(opacityAmount)
@@ -66,9 +66,8 @@ struct QuestionView: View {
                 .gesture(DragGesture().onChanged {
                     self.dragAmount = $0.translation
                     self.opacityAmount = 0.4
-                    self.yAmount = $0.translation.height
                     
-                    switch self.yAmount {
+                    switch $0.translation.height {
                     case -300 ... -200:
                         self.chosenAnswer = 1
                     case -200 ... -100:
@@ -86,9 +85,10 @@ struct QuestionView: View {
                         self.opacityAmount = 1.0
                     }
                 })
+                .padding()
 
-            AnswerView(text: String(row.falseAnswers[1]), color: chosenAnswer == 3 ? Color.red : Color.answerGray)
-            AnswerView(text: String(row.falseAnswers[2]), color: chosenAnswer == 4 ? Color.red : Color.answerGray)
+            AnswerView(text: String(row.falseAnswers[1]), color: chosenAnswer == 3 ? Color.cardGray : Color.answerGray)
+            AnswerView(text: String(row.falseAnswers[2]), color: chosenAnswer == 4 ? Color.cardGray : Color.answerGray)
         }
         .navigationBarTitle(Text(row.title), displayMode: .inline)
     }
