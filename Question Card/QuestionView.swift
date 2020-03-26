@@ -51,9 +51,11 @@ struct AnswerView: View {
 
 struct QuestionView: View {
     let row: Row
+    
     @State private var dragAmount = CGSize.zero
     @State private var opacityAmount = 1.0
     @State private var chosenAnswer = 0
+    @State private var isGiveUp = false
     
     var body: some View {
         VStack {
@@ -79,10 +81,21 @@ struct QuestionView: View {
                     default:
                         self.chosenAnswer = 0
                     }
-                }.onEnded { _ in
-                    withAnimation(.spring()) {
-                        self.dragAmount = .zero
-                        self.opacityAmount = 1.0
+                    
+                    if ($0.translation.width > 150 || $0.translation.width < -150) && ($0.translation.height > -100 && $0.translation.height < 100) {
+                        self.isGiveUp = true
+                    }
+                }.onEnded { view in
+                    if self.isGiveUp {
+                        withAnimation(.spring()) {
+                            self.dragAmount = CGSize(width: view.translation.width > 150 ? 300 : -300, height: 0)
+                            self.opacityAmount = 0.0
+                        }
+                    } else {
+                        withAnimation(.spring()) {
+                            self.dragAmount = CGSize.zero
+                            self.opacityAmount = 1.0
+                        }
                     }
                 })
                 .padding()
