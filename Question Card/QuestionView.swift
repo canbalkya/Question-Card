@@ -8,6 +8,11 @@
 
 import SwiftUI
 
+extension Color {
+    static let cardGray = Color(red: 55 / 255, green: 55 / 255, blue: 55 / 255)
+    static let answerGray = Color(red: 91 / 255, green: 91 / 255, blue: 91 / 255)
+}
+
 struct CardView: View {
     let text: String
     
@@ -15,7 +20,7 @@ struct CardView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 25)
                 .frame(width: 300, height: 170)
-                .foregroundColor(.init(red: 55 / 255, green: 55 / 255, blue: 55 / 255))
+                .foregroundColor(Color.cardGray)
             
             Text(text)
                 .font(.system(size: 35))
@@ -27,12 +32,13 @@ struct CardView: View {
 
 struct AnswerView: View {
     let text: String
+    var color: Color
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 16)
                 .frame(width: 270, height: 60)
-                .foregroundColor(.init(red: 91 / 255, green: 91 / 255, blue: 91 / 255))
+                .foregroundColor(color)
             
             Text(text)
                 .font(.system(size: 30))
@@ -45,12 +51,14 @@ struct AnswerView: View {
 struct QuestionView: View {
     let row: Row
     @State private var dragAmount = CGSize.zero
+    @State private var yAmount: CGFloat = 0
     @State private var opacityAmount = 1.0
+    @State private var chosenAnswer = 0
     
     var body: some View {
         VStack {
-            AnswerView(text: String(row.answers))
-            AnswerView(text: String(row.falseAnswers[0]))
+            AnswerView(text: String(row.answers), color: chosenAnswer == 1 ? Color.red : Color.answerGray)
+            AnswerView(text: String(row.falseAnswers[0]), color: chosenAnswer == 2 ? Color.red : Color.answerGray)
 
             CardView(text: self.row.questions)
                 .opacity(opacityAmount)
@@ -58,6 +66,20 @@ struct QuestionView: View {
                 .gesture(DragGesture().onChanged {
                     self.dragAmount = $0.translation
                     self.opacityAmount = 0.4
+                    self.yAmount = $0.translation.height
+                    
+                    switch self.yAmount {
+                    case -300 ... -200:
+                        self.chosenAnswer = 1
+                    case -200 ... -100:
+                        self.chosenAnswer = 2
+                    case 100...200:
+                        self.chosenAnswer = 3
+                    case 200...300:
+                        self.chosenAnswer = 4
+                    default:
+                        self.chosenAnswer = 0
+                    }
                 }.onEnded { _ in
                     withAnimation(.spring()) {
                         self.dragAmount = .zero
@@ -65,8 +87,8 @@ struct QuestionView: View {
                     }
                 })
 
-            AnswerView(text: String(row.falseAnswers[1]))
-            AnswerView(text: String(row.falseAnswers[2]))
+            AnswerView(text: String(row.falseAnswers[1]), color: chosenAnswer == 3 ? Color.red : Color.answerGray)
+            AnswerView(text: String(row.falseAnswers[2]), color: chosenAnswer == 4 ? Color.red : Color.answerGray)
         }
         .navigationBarTitle(Text(row.title), displayMode: .inline)
     }
