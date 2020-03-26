@@ -62,7 +62,8 @@ struct QuestionView: View {
             AnswerView(text: String(row.answers), color: chosenAnswer == 1 ? Color.cardGray : Color.answerGray)
             AnswerView(text: String(row.falseAnswers[0]), color: chosenAnswer == 2 ? Color.cardGray : Color.answerGray)
 
-            CardView(text: self.row.questions)
+            if !self.isGiveUp {
+                CardView(text: self.row.questions)
                 .opacity(opacityAmount)
                 .offset(dragAmount)
                 .gesture(DragGesture().onChanged {
@@ -99,11 +100,13 @@ struct QuestionView: View {
                     }
                 })
                 .padding()
+            }
 
             AnswerView(text: String(row.falseAnswers[1]), color: chosenAnswer == 3 ? Color.cardGray : Color.answerGray)
             AnswerView(text: String(row.falseAnswers[2]), color: chosenAnswer == 4 ? Color.cardGray : Color.answerGray)
         }
         .navigationBarTitle(Text(row.title), displayMode: .inline)
+        .animation(.default)
     }
 }
 
