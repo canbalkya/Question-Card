@@ -56,11 +56,13 @@ struct QuestionView: View {
     @State private var opacityAmount = 1.0
     @State private var chosenAnswer = 0
     @State private var isGiveUp = false
+    @State private var isTrue = 0
+    @State var seconds: Int = 0
     
     var body: some View {
         VStack {
-            AnswerView(text: String(row.answers), color: chosenAnswer == 1 ? Color.cardGray : Color.answerGray)
-            AnswerView(text: String(row.falseAnswers[0]), color: chosenAnswer == 2 ? Color.cardGray : Color.answerGray)
+            AnswerView(text: String(row.answers[0]), color: getColor(answer: 1))
+            AnswerView(text: String(row.answers[1]), color: getColor(answer: 2))
 
             if !self.isGiveUp {
                 CardView(text: self.row.questions)
@@ -69,6 +71,7 @@ struct QuestionView: View {
                 .gesture(DragGesture().onChanged {
                     self.dragAmount = $0.translation
                     self.opacityAmount = 0.4
+                    self.isTrue = 0
                     
                     switch $0.translation.height {
                     case -300 ... -200:
@@ -98,20 +101,54 @@ struct QuestionView: View {
                             self.opacityAmount = 1.0
                         }
                     }
+                    
+                    if self.chosenAnswer != 0 {
+                        if self.row.trueAnswersCount == self.chosenAnswer - 1 {
+                            self.isTrue = 1
+                        } else {
+                            self.isTrue = 2
+                        }
+                    }
                 })
                 .padding()
             }
 
-            AnswerView(text: String(row.falseAnswers[1]), color: chosenAnswer == 3 ? Color.cardGray : Color.answerGray)
-            AnswerView(text: String(row.falseAnswers[2]), color: chosenAnswer == 4 ? Color.cardGray : Color.answerGray)
+            AnswerView(text: String(row.answers[2]), color: getColor(answer: 3))
+            AnswerView(text: String(row.answers[3]), color: getColor(answer: 4))
         }
         .navigationBarTitle(Text(row.title), displayMode: .inline)
         .animation(.default)
     }
+    
+    func getColor(answer: Int) -> Color {
+        if chosenAnswer == answer {
+            switch isTrue {
+            case 0:
+                return Color.cardGray
+            case 1:
+                return Color.green
+            default:
+                return Color.red
+            }
+        }
+        
+        return Color.answerGray
+    }
+    
+//    func getResult(view: AnswerView) {
+//        let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+//        view.onReceive(timer) { input in
+//            self.seconds += 1
+//            
+//            if self.seconds == 5 {
+//                
+//            }
+//        }
+//    }
 }
 
 struct QuesitonView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView(row: Row(title: "Basic Maths", description: "This section is for primary school students. Maybe first, second or third grades.", questions: "What is 2 + 2", answers: 4, falseAnswers: [2, 1, 3]))
+        QuestionView(row: Row(title: "Basic Maths", description: "This section is for primary school students. Maybe first, second or third grades.", questions: "What is 2 + 2?", answers: [4, 2, 1, 3], trueAnswersCount: 0))
     }
 }
