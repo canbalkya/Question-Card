@@ -73,7 +73,7 @@ struct QuestionView: View {
                 CardView(text: self.row.questions)
                     .opacity(opacityAmount)
                     .offset(isDrag ? .zero : dragAmount)
-                    .onReceive(timer, perform: { input in
+                    .onReceive(timer, perform: { _ in
                         if self.isDrag {
                             if self.seconds < 2 {
                                 self.seconds += 1
@@ -156,7 +156,7 @@ struct QuestionView: View {
             }
         }
         
-        if (self.isStart && answer - 1 == self.row.trueAnswersCount) || (self.isGiveUp && answer - 1 == self.row.trueAnswersCount) {
+        if self.isStart && answer - 1 == self.row.trueAnswersCount || self.isGiveUp && answer - 1 == self.row.trueAnswersCount {
             return Color.green
         }
         
