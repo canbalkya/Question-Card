@@ -51,7 +51,7 @@ struct AnswerView: View {
 
 struct QuestionView: View {
     let row: Row
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+//    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @State private var dragAmount = CGSize.zero
     @State private var opacityAmount = 1.0
@@ -60,7 +60,7 @@ struct QuestionView: View {
     @State private var isTrue = 0
     @State private var seconds: Int = 0
     @State private var isDrag = false
-    @State private var isStart = false
+//    @State private var isStart = false
     
     var body: some View {
         let answers: [AnswerView] = [AnswerView(text: String(row.answers[0]), color: getColor(answer: 1)), AnswerView(text: String(row.answers[1]), color: getColor(answer: 2)), AnswerView(text: String(row.answers[2]), color: getColor(answer: 3)), AnswerView(text: String(row.answers[3]), color: getColor(answer: 4))]
@@ -73,17 +73,17 @@ struct QuestionView: View {
                 CardView(text: self.row.questions)
                     .opacity(opacityAmount)
                     .offset(isDrag ? .zero : dragAmount)
-                    .onReceive(timer, perform: { _ in
-                        if self.isDrag {
-                            if self.seconds < 2 {
-                                self.seconds += 1
-                            }
-
-                            if self.seconds == 2 {
-                                self.isStart = true
-                            }
-                        }
-                    })
+//                    .onReceive(timer, perform: { _ in
+//                        if self.isDrag {
+//                            if self.seconds < 2 {
+//                                self.seconds += 1
+//                            }
+//
+//                            if self.seconds == 2 {
+//                                self.isStart = true
+//                            }
+//                        }
+//                    })
                     .gesture(DragGesture().onChanged {
                         if self.isDrag == false {
                             self.dragAmount = $0.translation
@@ -150,13 +150,13 @@ struct QuestionView: View {
             case 0:
                 return Color.cardGray
             case 1:
-                return self.isStart ? Color.green : Color.cardGray
+                return /* self.isStart ? */ Color.green /* : Color.cardGray */
             default:
-                return self.isStart ? Color.red : Color.cardGray
+                return /* self.isStart ? */ Color.red /* : Color.cardGray */
             }
         }
         
-        if self.isStart && answer - 1 == self.row.trueAnswersCount || self.isGiveUp && answer - 1 == self.row.trueAnswersCount {
+        if /* self.isStart && */ self.isDrag && self.row.trueAnswersCount == answer - 1 /* || self.isGiveUp && answer - 1 == self.row.trueAnswersCount */ {
             return Color.green
         }
         
