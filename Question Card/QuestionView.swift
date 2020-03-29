@@ -61,9 +61,11 @@ struct QuestionView: View {
     @State private var isDrag = false
     
     var body: some View {
-        VStack {
-            AnswerView(text: String(row.answers[0]), color: getColor(answer: 1))
-            AnswerView(text: String(row.answers[1]), color: getColor(answer: 2))
+        let answers: [AnswerView] = [AnswerView(text: String(row.answers[0]), color: getColor(answer: 1)), AnswerView(text: String(row.answers[1]), color: getColor(answer: 2)), AnswerView(text: String(row.answers[2]), color: getColor(answer: 3)), AnswerView(text: String(row.answers[3]), color: getColor(answer: 4))]
+        
+        return VStack {
+            answers[0]
+            answers[1]
 
             if !self.isGiveUp {
                 CardView(text: self.row.questions)
@@ -106,20 +108,20 @@ struct QuestionView: View {
                     }
                     
                     if self.chosenAnswer != 0 {
+                        self.isDrag = true
+                        
                         if self.row.trueAnswersCount == self.chosenAnswer - 1 {
                             self.isTrue = 1
                         } else {
                             self.isTrue = 2
                         }
                     }
-                    
-                    self.isDrag = true
                 })
                 .padding()
             }
 
-            AnswerView(text: String(row.answers[2]), color: getColor(answer: 3))
-            AnswerView(text: String(row.answers[3]), color: getColor(answer: 4))
+            answers[2]
+            answers[3]
         }
         .navigationBarTitle(Text(row.title), displayMode: .inline)
         .animation(.default)
@@ -137,6 +139,10 @@ struct QuestionView: View {
             }
         }
         
+        if (self.isDrag || self.isGiveUp) && answer - 1 == self.row.trueAnswersCount {
+            return Color.green
+        }
+        
         return Color.answerGray
     }
     
@@ -144,9 +150,9 @@ struct QuestionView: View {
 //        let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 //        view.onReceive(timer) { input in
 //            self.seconds += 1
-//            
+//
 //            if self.seconds == 5 {
-//                
+//
 //            }
 //        }
 //    }
