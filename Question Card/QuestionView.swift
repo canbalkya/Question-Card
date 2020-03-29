@@ -57,7 +57,8 @@ struct QuestionView: View {
     @State private var chosenAnswer = 0
     @State private var isGiveUp = false
     @State private var isTrue = 0
-    @State var seconds: Int = 0
+    @State private var seconds: Int = 0
+    @State private var isDrag = false
     
     var body: some View {
         VStack {
@@ -67,27 +68,29 @@ struct QuestionView: View {
             if !self.isGiveUp {
                 CardView(text: self.row.questions)
                 .opacity(opacityAmount)
-                .offset(dragAmount)
+                .offset(isDrag ? .zero : dragAmount)
                 .gesture(DragGesture().onChanged {
-                    self.dragAmount = $0.translation
-                    self.opacityAmount = 0.4
-                    self.isTrue = 0
-                    
-                    switch $0.translation.height {
-                    case -300 ... -200:
-                        self.chosenAnswer = 1
-                    case -200 ... -100:
-                        self.chosenAnswer = 2
-                    case 100...200:
-                        self.chosenAnswer = 3
-                    case 200...300:
-                        self.chosenAnswer = 4
-                    default:
-                        self.chosenAnswer = 0
-                    }
-                    
-                    if ($0.translation.width > 150 || $0.translation.width < -150) && ($0.translation.height > -100 && $0.translation.height < 100) {
-                        self.isGiveUp = true
+                    if self.isDrag == false {
+                        self.dragAmount = $0.translation
+                        self.opacityAmount = 0.4
+                        self.isTrue = 0
+                        
+                        switch $0.translation.height {
+                        case -300 ... -200:
+                            self.chosenAnswer = 1
+                        case -200 ... -100:
+                            self.chosenAnswer = 2
+                        case 100...200:
+                            self.chosenAnswer = 3
+                        case 200...300:
+                            self.chosenAnswer = 4
+                        default:
+                            self.chosenAnswer = 0
+                        }
+                        
+                        if ($0.translation.width > 150 || $0.translation.width < -150) && ($0.translation.height > -100 && $0.translation.height < 100) {
+                            self.isGiveUp = true
+                        }
                     }
                 }.onEnded { view in
                     if self.isGiveUp {
@@ -109,6 +112,8 @@ struct QuestionView: View {
                             self.isTrue = 2
                         }
                     }
+                    
+                    self.isDrag = true
                 })
                 .padding()
             }
