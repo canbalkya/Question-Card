@@ -78,7 +78,7 @@ struct QuestionView: View {
                             if self.seconds < 2 {
                                 self.seconds += 1
                             }
-                            
+
                             if self.seconds == 2 {
                                 self.isStart = true
                             }
@@ -121,6 +121,7 @@ struct QuestionView: View {
                         
                         if self.chosenAnswer != 0 {
                             self.isTrue = 0
+                            self.isDrag = true
                             
                             if self.row.trueAnswersCount == self.chosenAnswer - 1 {
                                 self.isTrue = 1
@@ -129,7 +130,9 @@ struct QuestionView: View {
                             }
                         }
                         
-                        self.isDrag = true
+                        if self.isGiveUp {
+                            self.isDrag = true
+                        }
                     })
                     .padding()
                 }
@@ -153,11 +156,7 @@ struct QuestionView: View {
             }
         }
         
-        if self.isStart && answer - 1 == self.row.trueAnswersCount {
-            return Color.green
-        }
-        
-        if self.isGiveUp && answer - 1 == self.row.trueAnswersCount {
+        if (self.isStart && answer - 1 == self.row.trueAnswersCount) || (self.isGiveUp && answer - 1 == self.row.trueAnswersCount) {
             return Color.green
         }
         
