@@ -51,6 +51,7 @@ struct AnswerView: View {
 
 struct QuestionView: View {
     let row: Row
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @State private var dragAmount = CGSize.zero
     @State private var opacityAmount = 1.0
@@ -59,6 +60,7 @@ struct QuestionView: View {
     @State private var isTrue = 0
     @State private var seconds: Int = 0
     @State private var isDrag = false
+    @State private var isStart = false
     
     var body: some View {
         let answers: [AnswerView] = [AnswerView(text: String(row.answers[0]), color: getColor(answer: 1)), AnswerView(text: String(row.answers[1]), color: getColor(answer: 2)), AnswerView(text: String(row.answers[2]), color: getColor(answer: 3)), AnswerView(text: String(row.answers[3]), color: getColor(answer: 4))]
@@ -69,62 +71,74 @@ struct QuestionView: View {
 
             if !self.isGiveUp {
                 CardView(text: self.row.questions)
-                .opacity(opacityAmount)
-                .offset(isDrag ? .zero : dragAmount)
-                .gesture(DragGesture().onChanged {
-                    if self.isDrag == false {
-                        self.dragAmount = $0.translation
-                        self.opacityAmount = 0.4
-                        self.isTrue = 0
-                        
-                        switch $0.translation.height {
-                        case -300 ... -200:
-                            self.chosenAnswer = 1
-                        case -200 ... -100:
-                            self.chosenAnswer = 2
-                        case 100...200:
-                            self.chosenAnswer = 3
-                        case 200...300:
-                            self.chosenAnswer = 4
-                        default:
-                            self.chosenAnswer = 0
+                    .opacity(opacityAmount)
+                    .offset(isDrag ? .zero : dragAmount)
+                    .onReceive(timer, perform: { input in
+                        if self.isDrag {
+                            if self.seconds < 2 {
+                                self.seconds += 1
+                            }
+                            
+                            if self.seconds == 2 {
+                                self.isStart = true
+                            }
                         }
-                        
-                        if ($0.translation.width > 150 || $0.translation.width < -150) && ($0.translation.height > -100 && $0.translation.height < 100) {
-                            self.isGiveUp = true
+                    })
+                    .gesture(DragGesture().onChanged {
+                        if self.isDrag == false {
+                            self.dragAmount = $0.translation
+                            self.opacityAmount = 0.4
+                            
+                            switch $0.translation.height {
+                            case -300 ... -200:
+                                self.chosenAnswer = 1
+                            case -200 ... -100:
+                                self.chosenAnswer = 2
+                            case 100...200:
+                                self.chosenAnswer = 3
+                            case 200...300:
+                                self.chosenAnswer = 4
+                            default:
+                                self.chosenAnswer = 0
+                            }
+                            
+                            if ($0.translation.width > 150 || $0.translation.width < -150) && ($0.translation.height > -100 && $0.translation.height < 100) {
+                                self.isGiveUp = true
+                            }
                         }
-                    }
-                }.onEnded { view in
-                    if self.isGiveUp {
-                        withAnimation(.spring()) {
-                            self.dragAmount = CGSize(width: view.translation.width > 150 ? 300 : -300, height: 0)
-                            self.opacityAmount = 0.0
-                        }
-                    } else {
-                        withAnimation(.spring()) {
-                            self.dragAmount = CGSize.zero
-                            self.opacityAmount = 1.0
-                        }
-                    }
-                    
-                    if self.chosenAnswer != 0 {
-                        self.isDrag = true
-                        
-                        if self.row.trueAnswersCount == self.chosenAnswer - 1 {
-                            self.isTrue = 1
+                    }.onEnded { view in
+                        if !self.isGiveUp {
+                            withAnimation(.spring()) {
+                                self.dragAmount = CGSize.zero
+                                self.opacityAmount = 1.0
+                            }
                         } else {
-                            self.isTrue = 2
+                            withAnimation(.spring()) {
+                                self.dragAmount = CGSize(width: view.translation.width > 150 ? 300 : -300, height: 0)
+                                self.opacityAmount = 0.0
+                            }
                         }
-                    }
-                })
-                .padding()
-            }
+                        
+                        if self.chosenAnswer != 0 {
+                            self.isTrue = 0
+                            
+                            if self.row.trueAnswersCount == self.chosenAnswer - 1 {
+                                self.isTrue = 1
+                            } else {
+                                self.isTrue = 2
+                            }
+                        }
+                        
+                        self.isDrag = true
+                    })
+                    .padding()
+                }
 
-            answers[2]
-            answers[3]
-        }
-        .navigationBarTitle(Text(row.title), displayMode: .inline)
-        .animation(.default)
+                answers[2]
+                answers[3]
+            }
+            .navigationBarTitle(Text(row.title), displayMode: .inline)
+            .animation(.default)
     }
     
     func getColor(answer: Int) -> Color {
@@ -133,29 +147,22 @@ struct QuestionView: View {
             case 0:
                 return Color.cardGray
             case 1:
-                return Color.green
+                return self.isStart ? Color.green : Color.cardGray
             default:
-                return Color.red
+                return self.isStart ? Color.red : Color.cardGray
             }
         }
         
-        if (self.isDrag || self.isGiveUp) && answer - 1 == self.row.trueAnswersCount {
+        if self.isStart && answer - 1 == self.row.trueAnswersCount {
+            return Color.green
+        }
+        
+        if self.isGiveUp && answer - 1 == self.row.trueAnswersCount {
             return Color.green
         }
         
         return Color.answerGray
     }
-    
-//    func getResult(view: AnswerView) {
-//        let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-//        view.onReceive(timer) { input in
-//            self.seconds += 1
-//
-//            if self.seconds == 5 {
-//
-//            }
-//        }
-//    }
 }
 
 struct QuesitonView_Previews: PreviewProvider {
