@@ -63,14 +63,14 @@ struct QuestionView: View {
 //    @State private var isStart = false
     
     var body: some View {
-        let answers: [AnswerView] = [AnswerView(text: String(row.answers[0]), color: getColor(answer: 1)), AnswerView(text: String(row.answers[1]), color: getColor(answer: 2)), AnswerView(text: String(row.answers[2]), color: getColor(answer: 3)), AnswerView(text: String(row.answers[3]), color: getColor(answer: 4))]
+        let answers: [AnswerView] = [AnswerView(text: String(row.answers[0][0]), color: getColor(answer: 1)), AnswerView(text: String(row.answers[0][1]), color: getColor(answer: 2)), AnswerView(text: String(row.answers[0][2]), color: getColor(answer: 3)), AnswerView(text: String(row.answers[0][3]), color: getColor(answer: 4))]
         
         return VStack {
             answers[0]
             answers[1]
 
             if !self.isGiveUp {
-                CardView(text: self.row.questions)
+                CardView(text: self.row.questions[0])
                     .opacity(opacityAmount)
                     .offset(isDrag ? .zero : dragAmount)
 //                    .onReceive(timer, perform: { _ in
@@ -123,7 +123,7 @@ struct QuestionView: View {
                             self.isTrue = 0
                             self.isDrag = true
                             
-                            if self.row.trueAnswersCount == self.chosenAnswer - 1 {
+                            if self.row.trueAnswersCount[0] == self.chosenAnswer - 1 {
                                 self.isTrue = 1
                             } else {
                                 self.isTrue = 2
@@ -156,7 +156,7 @@ struct QuestionView: View {
             }
         }
         
-        if /* self.isStart && */ self.isDrag && self.row.trueAnswersCount == answer - 1 /* || self.isGiveUp && answer - 1 == self.row.trueAnswersCount */ {
+        if /* self.isStart && */ self.isDrag && self.row.trueAnswersCount[0] == answer - 1 /* || self.isGiveUp && answer - 1 == self.row.trueAnswersCount */ {
             return Color.green
         }
         
@@ -166,6 +166,6 @@ struct QuestionView: View {
 
 struct QuesitonView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView(row: Row(title: "Basic Maths", description: "This section is for primary school students. Maybe first, second or third grades.", questions: "What is 2 + 2?", answers: [4, 2, 1, 3], trueAnswersCount: 0))
+        QuestionView(row: Row(title: "Basic Maths", description: "This section is for primary school students. Maybe first, second or third grades.", questions: ["What is 2 + 2?", "What is 2 + 2?"], answers: [[4, 2, 1, 3], [4, 2, 1, 3]], trueAnswersCount: [0, 0]))
     }
 }

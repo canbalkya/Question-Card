@@ -13,9 +13,9 @@ struct Row: Identifiable {
     let title: String
     let description: String
     
-    let questions: String
-    let answers: [Int]
-    let trueAnswersCount: Int
+    let questions: [String]
+    let answers: [[Int]]
+    let trueAnswersCount: [Int]
 }
 
 struct RowView: View {
@@ -48,7 +48,7 @@ struct RowView: View {
 }
 
 struct HomeView: View {
-    @State private var rows = [Row(title: "Basic Maths", description: "This section is for primary school students. Maybe first, second or third grades.", questions: "What is 2 + 2?", answers: [4, 2, 1, 3], trueAnswersCount: 0)]
+    @State private var rows = [Row(title: "Basic Maths", description: "This section is for primary school students. Maybe first, second or third grades.", questions: ["What is 2 + 2?", "What is 2 + 2?"], answers: [[4, 2, 1, 3], [4, 2, 1, 3]], trueAnswersCount: [0, 0])]
     
     var body: some View {
         NavigationView {
