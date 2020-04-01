@@ -60,17 +60,18 @@ struct QuestionView: View {
     @State private var isTrue = 0
     @State private var seconds: Int = 0
     @State private var isDrag = false
+    @State private var questionNumber = 1
 //    @State private var isStart = false
     
     var body: some View {
-        let answers: [AnswerView] = [AnswerView(text: String(row.answers[0][0]), color: getColor(answer: 1)), AnswerView(text: String(row.answers[0][1]), color: getColor(answer: 2)), AnswerView(text: String(row.answers[0][2]), color: getColor(answer: 3)), AnswerView(text: String(row.answers[0][3]), color: getColor(answer: 4))]
+        let answers: [AnswerView] = [AnswerView(text: String(row.answers[questionNumber - 1][0]), color: getColor(answer: 1)), AnswerView(text: String(row.answers[questionNumber - 1][1]), color: getColor(answer: 2)), AnswerView(text: String(row.answers[questionNumber - 1][2]), color: getColor(answer: 3)), AnswerView(text: String(row.answers[questionNumber - 1][3]), color: getColor(answer: 4))]
         
         return VStack {
             answers[0]
             answers[1]
 
             if !self.isGiveUp {
-                CardView(text: self.row.questions[0])
+                CardView(text: self.row.questions[self.questionNumber - 1])
                     .opacity(opacityAmount)
                     .offset(isDrag ? .zero : dragAmount)
 //                    .onReceive(timer, perform: { _ in
@@ -111,6 +112,7 @@ struct QuestionView: View {
                             withAnimation(.spring()) {
                                 self.dragAmount = CGSize.zero
                                 self.opacityAmount = 1.0
+                                self.questionNumber += 1
                             }
                         } else {
                             withAnimation(.spring()) {
@@ -166,6 +168,6 @@ struct QuestionView: View {
 
 struct QuesitonView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView(row: Row(title: "Basic Maths", description: "This section is for primary school students. Maybe first, second or third grades.", questions: ["What is 2 + 2?", "What is 2 + 2?"], answers: [[4, 2, 1, 3], [4, 2, 1, 3]], trueAnswersCount: [0, 0]))
+        QuestionView(row: Row(title: "Basic Maths", description: "This section is for primary school students. Maybe first, second or third grades.", questions: ["What is 2 + 2?", "What is 2 + 5?"], answers: [[4, 2, 1, 3], [1, 2, 3, 7]], trueAnswersCount: [0, 3]))
     }
 }
