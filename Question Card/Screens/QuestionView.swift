@@ -8,47 +8,6 @@
 
 import SwiftUI
 
-extension Color {
-    static let cardGray = Color(red: 55 / 255, green: 55 / 255, blue: 55 / 255)
-    static let answerGray = Color(red: 91 / 255, green: 91 / 255, blue: 91 / 255)
-}
-
-struct CardView: View {
-    let text: String
-    
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 25)
-                .frame(width: 300, height: 170)
-                .foregroundColor(Color.cardGray)
-            
-            Text(text)
-                .font(.system(size: 35))
-                .bold()
-                .foregroundColor(.white)
-        }
-    }
-}
-
-struct AnswerView: View {
-    let text: String
-    var color: Color
-    
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 16)
-                .frame(width: 270, height: 60)
-                .foregroundColor(color)
-                .animation(.default)
-            
-            Text(text)
-                .font(.system(size: 30))
-                .bold()
-                .foregroundColor(.white)
-        }
-    }
-}
-
 struct QuestionView: View {
     let row: Row
 //    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A2BDAFE243690D200EC2D5D /* Color Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDAFD243690D200EC2D5D /* Color Extension.swift */; };
+		3A2BDB022436917B00EC2D5D /* RowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDB012436917B00EC2D5D /* RowView.swift */; };
+		3A2BDB05243691D900EC2D5D /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDB04243691D900EC2D5D /* Row.swift */; };
+		3A2BDB072436921F00EC2D5D /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDB062436921F00EC2D5D /* CardView.swift */; };
+		3A2BDB092436923500EC2D5D /* AnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDB082436923500EC2D5D /* AnswerView.swift */; };
 		3A4A85A42426B9E200F0A63F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4A85A32426B9E200F0A63F /* AppDelegate.swift */; };
 		3A4A85A62426B9E200F0A63F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4A85A52426B9E200F0A63F /* SceneDelegate.swift */; };
 		3A4A85A82426B9E200F0A63F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4A85A72426B9E200F0A63F /* HomeView.swift */; };
@@ -18,6 +23,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A2BDAFD243690D200EC2D5D /* Color Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color Extension.swift"; sourceTree = "<group>"; };
+		3A2BDB012436917B00EC2D5D /* RowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
+		3A2BDB04243691D900EC2D5D /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
+		3A2BDB062436921F00EC2D5D /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		3A2BDB082436923500EC2D5D /* AnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerView.swift; sourceTree = "<group>"; };
 		3A4A85A02426B9E200F0A63F /* Question Card.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Question Card.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A4A85A32426B9E200F0A63F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A4A85A52426B9E200F0A63F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +51,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A2BDAFB2436908900EC2D5D /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				3A4A85A32426B9E200F0A63F /* AppDelegate.swift */,
+				3A4A85A52426B9E200F0A63F /* SceneDelegate.swift */,
+				3A4A85A92426B9E400F0A63F /* Assets.xcassets */,
+				3A4A85AE2426B9E400F0A63F /* LaunchScreen.storyboard */,
+				3A4A85B12426B9E400F0A63F /* Info.plist */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		3A2BDAFC243690B800EC2D5D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3A2BDAFD243690D200EC2D5D /* Color Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3A2BDAFF243690F900EC2D5D /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				3A4A85A72426B9E200F0A63F /* HomeView.swift */,
+				3A4A85B72426BA5300F0A63F /* QuestionView.swift */,
+				3A4A85B92426BA7900F0A63F /* ResultView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		3A2BDB002436915A00EC2D5D /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				3A2BDB062436921F00EC2D5D /* CardView.swift */,
+				3A2BDB082436923500EC2D5D /* AnswerView.swift */,
+				3A2BDB012436917B00EC2D5D /* RowView.swift */,
+			);
+			path = "Custom Views";
+			sourceTree = "<group>";
+		};
+		3A2BDB03243691AA00EC2D5D /* Modals */ = {
+			isa = PBXGroup;
+			children = (
+				3A2BDB04243691D900EC2D5D /* Row.swift */,
+			);
+			path = Modals;
+			sourceTree = "<group>";
+		};
 		3A4A85972426B9E200F0A63F = {
 			isa = PBXGroup;
 			children = (
@@ -60,14 +118,11 @@
 		3A4A85A22426B9E200F0A63F /* Question Card */ = {
 			isa = PBXGroup;
 			children = (
-				3A4A85A32426B9E200F0A63F /* AppDelegate.swift */,
-				3A4A85A52426B9E200F0A63F /* SceneDelegate.swift */,
-				3A4A85A72426B9E200F0A63F /* HomeView.swift */,
-				3A4A85B72426BA5300F0A63F /* QuestionView.swift */,
-				3A4A85B92426BA7900F0A63F /* ResultView.swift */,
-				3A4A85A92426B9E400F0A63F /* Assets.xcassets */,
-				3A4A85AE2426B9E400F0A63F /* LaunchScreen.storyboard */,
-				3A4A85B12426B9E400F0A63F /* Info.plist */,
+				3A2BDAFB2436908900EC2D5D /* Support */,
+				3A2BDAFF243690F900EC2D5D /* Screens */,
+				3A2BDB002436915A00EC2D5D /* Custom Views */,
+				3A2BDB03243691AA00EC2D5D /* Modals */,
+				3A2BDAFC243690B800EC2D5D /* Extensions */,
 				3A4A85AB2426B9E400F0A63F /* Preview Content */,
 			);
 			path = "Question Card";
@@ -153,7 +208,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A4A85B82426BA5300F0A63F /* QuestionView.swift in Sources */,
+				3A2BDB072436921F00EC2D5D /* CardView.swift in Sources */,
+				3A2BDB092436923500EC2D5D /* AnswerView.swift in Sources */,
 				3A4A85A42426B9E200F0A63F /* AppDelegate.swift in Sources */,
+				3A2BDB022436917B00EC2D5D /* RowView.swift in Sources */,
+				3A2BDAFE243690D200EC2D5D /* Color Extension.swift in Sources */,
+				3A2BDB05243691D900EC2D5D /* Row.swift in Sources */,
 				3A4A85BA2426BA7900F0A63F /* ResultView.swift in Sources */,
 				3A4A85A62426B9E200F0A63F /* SceneDelegate.swift in Sources */,
 				3A4A85A82426B9E200F0A63F /* HomeView.swift in Sources */,
@@ -296,7 +356,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Question Card/Preview Content\"";
 				DEVELOPMENT_TEAM = 84X92G2X4P;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "Question Card/Info.plist";
+				INFOPLIST_FILE = "Question Card/Support/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -316,7 +376,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Question Card/Preview Content\"";
 				DEVELOPMENT_TEAM = 84X92G2X4P;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "Question Card/Info.plist";
+				INFOPLIST_FILE = "Question Card/Support/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
