@@ -86,33 +86,34 @@ struct QuestionView: View {
 //                        }
 //                    })
                     .gesture(DragGesture().onChanged {
-                        if self.isDrag == false {
-                            self.dragAmount = $0.translation
-                            self.opacityAmount = 0.4
-                            
-                            switch $0.translation.height {
-                            case -300 ... -200:
-                                self.chosenAnswer = 1
-                            case -200 ... -100:
-                                self.chosenAnswer = 2
-                            case 100...200:
-                                self.chosenAnswer = 3
-                            case 200...300:
-                                self.chosenAnswer = 4
-                            default:
-                                self.chosenAnswer = 0
-                            }
-                            
-                            if ($0.translation.width > 150 || $0.translation.width < -150) && ($0.translation.height > -100 && $0.translation.height < 100) {
-                                self.isGiveUp = true
-                            }
+                        guard !self.isDrag else { return }
+                        
+                        self.dragAmount = $0.translation
+                        self.opacityAmount = 0.4
+                        
+                        switch $0.translation.height {
+                        case -300 ... -200:
+                            self.chosenAnswer = 1
+                        case -200 ... -100:
+                            self.chosenAnswer = 2
+                        case 100...200:
+                            self.chosenAnswer = 3
+                        case 200...300:
+                            self.chosenAnswer = 4
+                        default:
+                            self.chosenAnswer = 0
+                        }
+                        
+                        if ($0.translation.width > 150 || $0.translation.width < -150) && ($0.translation.height > -100 && $0.translation.height < 100) {
+                            self.isGiveUp = true
                         }
                     }.onEnded { view in
+                        guard !self.isDrag else { return }
+                        
                         if !self.isGiveUp {
                             withAnimation(.spring()) {
                                 self.dragAmount = CGSize.zero
                                 self.opacityAmount = 1.0
-                                self.questionNumber += 1
                             }
                         } else {
                             withAnimation(.spring()) {
@@ -124,6 +125,7 @@ struct QuestionView: View {
                         if self.chosenAnswer != 0 {
                             self.isTrue = 0
                             self.isDrag = true
+                            self.questionNumber += 1
                             
                             if self.row.trueAnswersCount[0] == self.chosenAnswer - 1 {
                                 self.isTrue = 1
