@@ -18,7 +18,6 @@ struct HomeView: View {
                 VStack {
                     ForEach(rows, id: \.id) { row in
                         NavigationLink(destination: EducationView(row: row)) {
-//                            RowView(title: row.title, description: row.description)
                             RowView(row: row)
                         }
                     }
