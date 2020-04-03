@@ -23,14 +23,11 @@ struct EducationView: View {
 //    @State private var isStart = false
     
     var body: some View {
-//        let answers: [AnswerView] = [AnswerView(text: String(row.answers[questionNumber - 1][0]), color: getColor(answer: 1)), AnswerView(text: String(row.answers[questionNumber - 1][1]), color: getColor(answer: 2)), AnswerView(text: String(row.answers[questionNumber - 1][2]), color: getColor(answer: 3)), AnswerView(text: String(row.answers[questionNumber - 1][3]), color: getColor(answer: 4))]
-        
         return VStack {
             AnswerView(answer: row.answers[questionNumber][0], color: getColor(answer: 1))
             AnswerView(answer: row.answers[questionNumber][1], color: getColor(answer: 2))
 
             if !self.isGiveUp {
-//                QuestionView(text: self.row.questions[self.questionNumber - 1])
                 QuestionView(question: self.row.questions[questionNumber])
                     .opacity(opacityAmount)
                     .offset(isDrag ? .zero : dragAmount)
@@ -86,6 +83,7 @@ struct EducationView: View {
                             self.isTrue = 0
                             self.isDrag = true
                             self.questionNumber += 1
+                            print(self.questionNumber)
                             
                             if self.row.questions[self.questionNumber].answerCount == self.chosenAnswer - 1 {
                                 self.isTrue = 1
