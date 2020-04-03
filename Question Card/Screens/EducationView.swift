@@ -18,19 +18,19 @@ struct EducationView: View {
     @State private var isGiveUp = false
     @State private var isTrue = 0
     @State private var seconds: Int = 0
-    @State private var isDrag = false
+    @State private var dragCount = 0
     @State private var questionNumber = 0
 //    @State private var isStart = false
     
     var body: some View {
         return VStack {
-            AnswerView(answer: row.answers[questionNumber][0], color: getColor(answer: 1))
-            AnswerView(answer: row.answers[questionNumber][1], color: getColor(answer: 2))
+            AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][0], color: getColor(answer: 1))
+            AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][1], color: getColor(answer: 2))
 
             if !self.isGiveUp {
-                QuestionView(question: self.row.questions[questionNumber])
+                QuestionView(question: self.row.questions[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber])
                     .opacity(opacityAmount)
-                    .offset(isDrag ? .zero : dragAmount)
+                    .offset(dragCount != questionNumber ? .zero : dragAmount)
 //                    .onReceive(timer, perform: { _ in
 //                        if self.isDrag {
 //                            if self.seconds < 2 {
@@ -43,7 +43,7 @@ struct EducationView: View {
 //                        }
 //                    })
                     .gesture(DragGesture().onChanged {
-                        guard !self.isDrag else { return }
+                        guard self.questionNumber < self.row.questions.count else { return }
                         
                         self.dragAmount = $0.translation
                         self.opacityAmount = 0.4
@@ -65,7 +65,7 @@ struct EducationView: View {
                             self.isGiveUp = true
                         }
                     }.onEnded { view in
-                        guard !self.isDrag else { return }
+                        guard self.questionNumber < self.row.questions.count else { return }
                         
                         if !self.isGiveUp {
                             withAnimation(.spring()) {
@@ -81,11 +81,11 @@ struct EducationView: View {
                         
                         if self.chosenAnswer != 0 {
                             self.isTrue = 0
-                            self.isDrag = true
+                            self.dragCount += 1
                             self.questionNumber += 1
                             print(self.questionNumber)
                             
-                            if self.row.questions[self.questionNumber].answerCount == self.chosenAnswer - 1 {
+                            if self.row.questions[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber].answerCount == self.chosenAnswer - 1 {
                                 self.isTrue = 1
                             } else {
                                 self.isTrue = 2
@@ -93,14 +93,14 @@ struct EducationView: View {
                         }
                         
                         if self.isGiveUp {
-                            self.isDrag = true
+                            self.dragCount += 1
                         }
                     })
                     .padding()
                 }
 
-                AnswerView(answer: row.answers[questionNumber][2], color: getColor(answer: 3))
-                AnswerView(answer: row.answers[questionNumber][3], color: getColor(answer: 4))
+                AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][2], color: getColor(answer: 3))
+                AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][3], color: getColor(answer: 4))
             }
             .navigationBarTitle(Text(row.title), displayMode: .inline)
             .animation(.default)
@@ -118,7 +118,7 @@ struct EducationView: View {
             }
         }
         
-        if /* self.isStart && */ self.isDrag && self.row.questions[questionNumber].answerCount == answer - 1 /* || self.isGiveUp && answer - 1 == self.row.trueAnswersCount */ {
+        if /* self.isStart && */ self.dragCount != self.questionNumber && self.row.questions[questionNumber].answerCount == answer - 1 /* || self.isGiveUp && answer - 1 == self.row.trueAnswersCount */ {
             return Color.green
         }
         
