@@ -13,7 +13,6 @@ struct Row: Identifiable {
     let title: String
     let description: String
     
-    let questions: [String]
-    let answers: [[Int]]
-    let trueAnswersCount: [Int]
+    let questions: [Question]
+    let answers: [[Answer]]
 }

@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-struct CardView: View {
-    let text: String
+struct QuestionView: View {
+    let question: Question
     
     var body: some View {
         ZStack {
@@ -17,7 +17,7 @@ struct CardView: View {
                 .frame(width: 300, height: 170)
                 .foregroundColor(Color.cardGray)
             
-            Text(text)
+            Text(question.text)
                 .font(.system(size: 35))
                 .bold()
                 .foregroundColor(.white)

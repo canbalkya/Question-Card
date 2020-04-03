@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct QuestionView: View {
+struct EducationView: View {
     let row: Row
 //    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -19,18 +19,19 @@ struct QuestionView: View {
     @State private var isTrue = 0
     @State private var seconds: Int = 0
     @State private var isDrag = false
-    @State private var questionNumber = 1
+    @State private var questionNumber = 0
 //    @State private var isStart = false
     
     var body: some View {
-        let answers: [AnswerView] = [AnswerView(text: String(row.answers[questionNumber - 1][0]), color: getColor(answer: 1)), AnswerView(text: String(row.answers[questionNumber - 1][1]), color: getColor(answer: 2)), AnswerView(text: String(row.answers[questionNumber - 1][2]), color: getColor(answer: 3)), AnswerView(text: String(row.answers[questionNumber - 1][3]), color: getColor(answer: 4))]
+//        let answers: [AnswerView] = [AnswerView(text: String(row.answers[questionNumber - 1][0]), color: getColor(answer: 1)), AnswerView(text: String(row.answers[questionNumber - 1][1]), color: getColor(answer: 2)), AnswerView(text: String(row.answers[questionNumber - 1][2]), color: getColor(answer: 3)), AnswerView(text: String(row.answers[questionNumber - 1][3]), color: getColor(answer: 4))]
         
         return VStack {
-            answers[0]
-            answers[1]
+            AnswerView(answer: row.answers[questionNumber][0], color: getColor(answer: 1))
+            AnswerView(answer: row.answers[questionNumber][1], color: getColor(answer: 2))
 
             if !self.isGiveUp {
-                CardView(text: self.row.questions[self.questionNumber - 1])
+//                QuestionView(text: self.row.questions[self.questionNumber - 1])
+                QuestionView(question: self.row.questions[questionNumber])
                     .opacity(opacityAmount)
                     .offset(isDrag ? .zero : dragAmount)
 //                    .onReceive(timer, perform: { _ in
@@ -86,7 +87,7 @@ struct QuestionView: View {
                             self.isDrag = true
                             self.questionNumber += 1
                             
-                            if self.row.trueAnswersCount[0] == self.chosenAnswer - 1 {
+                            if self.row.questions[self.questionNumber].answerCount == self.chosenAnswer - 1 {
                                 self.isTrue = 1
                             } else {
                                 self.isTrue = 2
@@ -100,14 +101,14 @@ struct QuestionView: View {
                     .padding()
                 }
 
-                answers[2]
-                answers[3]
+                AnswerView(answer: row.answers[questionNumber][2], color: getColor(answer: 3))
+                AnswerView(answer: row.answers[questionNumber][3], color: getColor(answer: 4))
             }
             .navigationBarTitle(Text(row.title), displayMode: .inline)
             .animation(.default)
     }
     
-    func getColor(answer: Int) -> Color {
+    public func getColor(answer: Int) -> Color {
         if chosenAnswer == answer {
             switch isTrue {
             case 0:
@@ -119,7 +120,7 @@ struct QuestionView: View {
             }
         }
         
-        if /* self.isStart && */ self.isDrag && self.row.trueAnswersCount[0] == answer - 1 /* || self.isGiveUp && answer - 1 == self.row.trueAnswersCount */ {
+        if /* self.isStart && */ self.isDrag && self.row.questions[questionNumber].answerCount == answer - 1 /* || self.isGiveUp && answer - 1 == self.row.trueAnswersCount */ {
             return Color.green
         }
         
@@ -129,6 +130,6 @@ struct QuestionView: View {
 
 struct QuesitonView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView(row: Row(title: "Basic Maths", description: "This section is for primary school students. Maybe first, second or third grades.", questions: ["What is 2 + 2?", "What is 2 + 5?"], answers: [[4, 2, 1, 3], [1, 2, 3, 7]], trueAnswersCount: [0, 3]))
+        EducationView(row: Row(title: "Basic Maths", description: "This section is for primary school students. Maybe first, second or third grades.", questions: [Question(text: "What is 2 + 2?", answerCount: 0), Question(text: "What is 2 + 2?", answerCount: 0)], answers: [[Answer(text: "4"), Answer(text: "3"), Answer(text: "2"), Answer(text: "1")], [Answer(text: "4"), Answer(text: "3"), Answer(text: "2"), Answer(text: "1")]]))
     }
 }
