@@ -20,6 +20,7 @@ struct EducationView: View {
     @State private var seconds: Int = 0
     @State private var dragCount = 0
     @State private var questionNumber = 0
+    @State private var isPresented = false
 //    @State private var isStart = false
     
     var body: some View {
@@ -83,7 +84,6 @@ struct EducationView: View {
                             self.isTrue = 0
                             self.dragCount += 1
                             self.questionNumber += 1
-                            print(self.questionNumber)
                             
                             if self.row.questions[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber].answerCount == self.chosenAnswer - 1 {
                                 self.isTrue = 1
@@ -92,8 +92,13 @@ struct EducationView: View {
                             }
                         }
                         
+                        if self.questionNumber == self.row.questions.count {
+                            self.isPresented = true
+                        }
+                        
                         if self.isGiveUp {
                             self.dragCount += 1
+                            self.isPresented = true
                         }
                     })
                     .padding()
@@ -104,6 +109,9 @@ struct EducationView: View {
             }
             .navigationBarTitle(Text(row.title), displayMode: .inline)
             .animation(.default)
+            .sheet(isPresented: $isPresented, content: {
+                ResultView(trueCount: 5, falseCount: 3)
+            })
     }
     
     public func getColor(answer: Int) -> Color {
