@@ -26,10 +26,10 @@ struct HomeView: View {
             .navigationBarTitle("Question Card")
             .navigationBarItems(trailing: Button(action: {
                 self.isPresented = true
-                print("Tapped")
             }) {
-                Image(systemName: "plus.circle")
+                Image(systemName: "plus")
                     .foregroundColor(.primary)
+                    .font(.system(size: 24))
             })
             .sheet(isPresented: $isPresented, content: {
                 CreateView()
