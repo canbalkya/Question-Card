@@ -26,43 +26,42 @@ struct CreateView: View {
                     TextField("Description", text: $description)
                 }
                 
-                    ForEach(questions, id: \.self) { number in
-                        Section(header: Text("\(number). Question")) {
-                            TextField("Question", text: self.$question)
+                ForEach(questions, id: \.self) { number in
+                    Section(header: Text("\(number). Question")) {
+                        TextField("Question", text: self.$question)
 
-                            TextField("Answer", text: self.$answers[0])
-                            TextField("Answer", text: self.$answers[1])
-                            TextField("Answer", text: self.$answers[2])
-                            TextField("Answer", text: self.$answers[3])
-                            
-                            Picker("True Answer", selection: self.$trueAnswer) {
-                                ForEach(Self.trueAnswers, id: \.self) {
-                                    Text($0)
-                                }
+                        TextField("Answer", text: self.$answers[0])
+                        TextField("Answer", text: self.$answers[1])
+                        TextField("Answer", text: self.$answers[2])
+                        TextField("Answer", text: self.$answers[3])
+                        
+                        Picker("True Answer", selection: self.$trueAnswer) {
+                            ForEach(Self.trueAnswers, id: \.self) {
+                                Text($0)
                             }
                         }
                     }
+                }
                 
-                    Section {
-                        Button(action: {
-                            
-                        }) {
-                            Text("Add new question")
-                        }
+                Section {
+                    Button(action: {
+                        
+                    }) {
+                        Text("Add new question")
                     }
+                }
                     
-                    Section {
-                        Button(action: {
-                            
-                        }) {
-                            Text("Create")
-                        }
+                Section {
+                    Button(action: {
+                        
+                    }) {
+                        Text("Create")
                     }
                 }
             }
         }
     }
-
+}
 
 struct CreateView_Previews: PreviewProvider {
     static var previews: some View {
