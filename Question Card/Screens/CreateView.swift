@@ -13,7 +13,7 @@ struct CreateView: View {
     @State private var description = ""
     @State private var question = ""
     @State private var answers = ["", "", "", ""]
-    @State private var trueAnswer = 0
+    @State private var trueAnswer = "First"
     var questions = Array(1...10)
     
     static let trueAnswers = ["First", "Second", "Third", "Fourth"]
