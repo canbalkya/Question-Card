@@ -14,7 +14,7 @@ struct CreateView: View {
     @State private var question = ""
     @State private var answers = ["", "", "", ""]
     @State private var trueAnswer = "First"
-    var questions = Array(1...10)
+    @State private var questions = Array(1...1)
     
     static let trueAnswers = ["First", "Second", "Third", "Fourth"]
     
@@ -45,7 +45,7 @@ struct CreateView: View {
                 
                 Section {
                     Button(action: {
-                        
+                        self.questions.append(self.questions.last! + 1)
                     }) {
                         Text("Add new question")
                     }
@@ -53,12 +53,13 @@ struct CreateView: View {
                     
                 Section {
                     Button(action: {
-                        
+
                     }) {
                         Text("Create")
                     }
                 }
             }
+            .navigationBarTitle("Create a new row")
         }
     }
 }
