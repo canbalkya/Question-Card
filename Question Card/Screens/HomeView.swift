@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var rows = [Row(title: "Basic Maths", description: "This section is for primary school students. Maybe first, second or third grades.", questions: [Question(text: "What is 2 + 2?", answerCount: 0), Question(text: "What is 5 + 2?", answerCount: 0)], answers: [[Answer(text: "4"), Answer(text: "3"), Answer(text: "1"), Answer(text: "2")], [Answer(text: "7"), Answer(text: "1"), Answer(text: "10"), Answer(text: "12")]])]
+    @State private var isPresented = false
     
     var body: some View {
         NavigationView {
@@ -23,6 +24,16 @@ struct HomeView: View {
                 }
             }
             .navigationBarTitle("Question Card")
+            .navigationBarItems(trailing: Button(action: {
+                self.isPresented = true
+                print("Tapped")
+            }) {
+                Image(systemName: "plus.circle")
+                    .foregroundColor(.primary)
+            })
+            .sheet(isPresented: $isPresented, content: {
+                CreateView()
+            })
         }
     }
 }

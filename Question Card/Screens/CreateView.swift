@@ -16,6 +16,8 @@ struct CreateView: View {
     @State private var trueAnswer = "First"
     @State private var questions = Array(1...1)
     
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     static let trueAnswers = ["First", "Second", "Third", "Fourth"]
     
     var body: some View {
@@ -53,7 +55,7 @@ struct CreateView: View {
                     
                 Section {
                     Button(action: {
-
+                        self.presentationMode.wrappedValue.dismiss()
                     }) {
                         Text("Create")
                     }
