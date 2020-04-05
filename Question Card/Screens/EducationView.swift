@@ -27,7 +27,7 @@ struct EducationView: View {
     
     var body: some View {
         VStack {
-            HStack {
+            HStack() {
                 ZStack {
                     Rectangle()
                         .cornerRadius(12)
@@ -39,7 +39,7 @@ struct EducationView: View {
                         .foregroundColor(.white)
                 }
                 
-                ZStack {
+                ZStack(alignment: .trailing) {
                     Rectangle()
                         .cornerRadius(12)
                         .foregroundColor(Color.green)
@@ -48,9 +48,10 @@ struct EducationView: View {
                     
                     Text(String(trueCount))
                         .foregroundColor(.white)
+                        .padding(.trailing, 10)
                 }
                 
-                ZStack {
+                ZStack(alignment: .leading) {
                     Rectangle()
                         .cornerRadius(12)
                         .foregroundColor(Color.red)
@@ -59,9 +60,10 @@ struct EducationView: View {
                     
                     Text(String(trueCount))
                         .foregroundColor(.white)
+                        .padding(.leading, 10)
                 }
             }
-            .padding()
+            .padding(.bottom)
             
             AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][0], color: getColor(answer: 1))
             AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][1], color: getColor(answer: 2))

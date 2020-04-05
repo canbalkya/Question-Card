@@ -26,7 +26,7 @@ struct ResultView: View {
                 .frame(minHeight: 50, maxHeight: 150)
             
             HStack {
-                ZStack {
+                ZStack(alignment: .trailing) {
                     Rectangle()
                         .cornerRadius(12)
                         .foregroundColor(Color.green)
@@ -34,14 +34,14 @@ struct ResultView: View {
                     
                     Text(String(trueCount))
                         .foregroundColor(.white)
-                        .padding(.leading, CGFloat((280 * trueCount) / (trueCount + falseCount)) - 24)
+                        .padding(.trailing, 10)
                 }
                 
                 Text("true")
             }.animation(.spring())
             
             HStack {
-                ZStack {
+                ZStack(alignment: .trailing) {
                     Rectangle()
                         .cornerRadius(12)
                         .foregroundColor(Color.red)
@@ -49,7 +49,7 @@ struct ResultView: View {
                     
                     Text(String(falseCount))
                         .foregroundColor(.white)
-                        .padding(.leading, CGFloat((280 * falseCount) / (trueCount + falseCount)) - 24)
+                        .padding(.trailing, 10)
                 }
                 
                 Text("false")
