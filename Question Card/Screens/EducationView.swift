@@ -21,10 +21,48 @@ struct EducationView: View {
     @State private var dragCount = 0
     @State private var questionNumber = 0
     @State private var isPresented = false
+    @State private var trueCount = 0
+    @State private var falseCount = 0
 //    @State private var isStart = false
     
     var body: some View {
-        return VStack {
+        VStack {
+            HStack {
+                ZStack {
+                    Rectangle()
+                        .cornerRadius(12)
+                        .foregroundColor(Color.cardGray)
+                        .frame(width: 40, height: 40)
+                        .opacity(0.8)
+                    
+                    Text(String(trueCount + falseCount))
+                        .foregroundColor(.white)
+                }
+                
+                ZStack {
+                    Rectangle()
+                        .cornerRadius(12)
+                        .foregroundColor(Color.green)
+                        .frame(width: 115, height: 40)
+                        .opacity(0.8)
+                    
+                    Text(String(trueCount))
+                        .foregroundColor(.white)
+                }
+                
+                ZStack {
+                    Rectangle()
+                        .cornerRadius(12)
+                        .foregroundColor(Color.red)
+                        .frame(width: 115, height: 40)
+                        .opacity(0.8)
+                    
+                    Text(String(trueCount))
+                        .foregroundColor(.white)
+                }
+            }
+            .padding()
+            
             AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][0], color: getColor(answer: 1))
             AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][1], color: getColor(answer: 2))
 
