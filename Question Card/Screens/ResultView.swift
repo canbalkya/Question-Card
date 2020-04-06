@@ -34,6 +34,7 @@ struct ResultView: View {
                             .frame(width: trueCount == 0 ? 40 : CGFloat((310 * trueCount) / (trueCount + falseCount)), height: 45)
                         
                         Text(String(trueCount))
+                            .fontWeight(.semibold)
                             .font(.system(size: 20))
                             .foregroundColor(.white)
                             .padding(.trailing, 10)
@@ -51,6 +52,7 @@ struct ResultView: View {
                             .frame(width: falseCount == 0 ? 40 : CGFloat((310 * falseCount) / (trueCount + falseCount)), height: 45)
                         
                         Text(String(falseCount))
+                            .fontWeight(.semibold)
                             .font(.system(size: 20))
                             .foregroundColor(.white)
                             .padding(.trailing, 10)

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct AnswerView: View {
-    let answer: Answer
+    let text: String
     var color: Color
     
     var body: some View {
@@ -19,7 +19,7 @@ struct AnswerView: View {
                 .foregroundColor(color)
                 .animation(.default)
             
-            Text(answer.text)
+            Text(text)
                 .font(.system(size: 30))
                 .bold()
                 .foregroundColor(.white)

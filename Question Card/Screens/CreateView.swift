@@ -7,18 +7,21 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct CreateView: View {
     @State private var title = ""
     @State private var description = ""
-    @State private var question = ""
-    @State private var answers = ["", "", "", ""]
-    @State private var trueAnswer = "First"
-    @State private var questions = Array(1...1)
+    @State private var questions = ["", "", "", "", "", "", "", "", "", ""]
+    @State private var answers = [["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""]]
+    @State private var trueAnswer = ["First", "First", "First", "First", "First", "First", "First", "First", "First", "First"]
+    @State private var showingAlert = false
     
+    @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     static let trueAnswers = ["First", "Second", "Third", "Fourth"]
+    let count = (0...1)
     
     var body: some View {
         NavigationView {
@@ -28,38 +31,60 @@ struct CreateView: View {
                     TextField("Description", text: $description)
                 }
                 
-                ForEach(questions, id: \.self) { number in
-                    Section(header: Text("\(number). Question")) {
-                        TextField("Question", text: self.$question)
+                ForEach(count, id: \.self) { number in
+                    Section(header: Text("\(number + 1). Question")) {
+                        TextField("Question", text: self.$questions[number])
 
-                        TextField("Answer", text: self.$answers[0])
-                        TextField("Answer", text: self.$answers[1])
-                        TextField("Answer", text: self.$answers[2])
-                        TextField("Answer", text: self.$answers[3])
+                        TextField("Answer", text: self.$answers[number][0])
+                        TextField("Answer", text: self.$answers[number][1])
+                        TextField("Answer", text: self.$answers[number][2])
+                        TextField("Answer", text: self.$answers[number][3])
                         
-                        Picker("True Answer", selection: self.$trueAnswer) {
+                        Picker("True Answer", selection: self.$trueAnswer[number]) {
                             ForEach(Self.trueAnswers, id: \.self) {
                                 Text($0)
                             }
                         }
                     }
                 }
-                
-                Section {
-                    Button(action: {
-                        self.questions.append(self.questions.last! + 1)
-                    }) {
-                        Text("Add new question")
-                    }
-                }
                     
                 Section {
                     Button(action: {
+                        if self.title == "" || self.description == "" {
+                            self.showingAlert = true
+                            return
+                        }
+                        
+                        let card = Card(context: self.moc)
+                        card.id = UUID()
+                        card.title = self.title
+                        card.des = self.description
+                        
+                        for i in self.count {
+                            let question = Question(context: self.moc)
+                            question.id = UUID()
+                            question.text = self.questions[i]
+                            question.firstAnswer = self.answers[i][0]
+                            question.secondAnswer = self.answers[i][1]
+                            question.thirdAnswer = self.answers[i][2]
+                            question.fourthAnswer = self.answers[i][3]
+                            question.trueAnswerCount = self.trueAnswer[i]
+                        }
+                        
+                        do {
+                            try self.moc.save()
+                        } catch {
+                            print(error)
+                        }
+                        
                         self.presentationMode.wrappedValue.dismiss()
                     }) {
                         Text("Create")
                     }
                 }
+            }
+            .alert(isPresented: $showingAlert) {
+                Alert(title: Text("Write title or description!"), message: Text("You have to write title and description for create new card."), dismissButton: .default(Text("Ok")))
             }
             .navigationBarTitle("Create a new row")
         }

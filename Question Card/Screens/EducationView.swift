@@ -7,9 +7,11 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct EducationView: View {
-    let row: Row
+    @ObservedObject var card: Card
+    var questions: [Question]
     
     @State private var dragAmount = CGSize.zero
     @State private var opacityAmount = 1.0
@@ -24,6 +26,21 @@ struct EducationView: View {
     @State private var trueLength: CGFloat = 115
     @State private var falseLength: CGFloat = 115
     
+    var count: Int
+    var trueAnswerCount: Int {
+        if self.questions[questionNumber].trueAnswerCount == "First" {
+            return 1
+        } else if self.questions[questionNumber].trueAnswerCount == "Second" {
+            return 2
+        } else if self.questions[questionNumber].trueAnswerCount == "Third" {
+            return 3
+        } else if self.questions[questionNumber].trueAnswerCount == "Fourth" {
+            return 4
+        }
+        
+        return 0
+    }
+    
     var body: some View {
         VStack {
             HStack {
@@ -34,7 +51,7 @@ struct EducationView: View {
                         .frame(width: 40, height: 40)
                         .opacity(0.8)
                     
-                    Text(String(self.row.questions.count == questionNumber ? self.row.questions.count : questionNumber + 1))
+                    Text(String(count == questionNumber ? count : questionNumber + 1))
                         .foregroundColor(.white)
                 }
                 
@@ -72,11 +89,11 @@ struct EducationView: View {
             
             Spacer()
             
-            AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][0], color: getColor(answer: 1))
-            AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][1], color: getColor(answer: 2))
+            AnswerView(text: self.questions[questionNumber].firstAnswer!/*String(question.firstAnswer![self.questionNumber == count ? count - 1 : self.questionNumber])*/, color: getColor(answer: 1))
+            AnswerView(text: self.questions[questionNumber].secondAnswer!, color: getColor(answer: 2))
 
             if !self.isGiveUp {
-                QuestionView(question: self.row.questions[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber])
+                QuestionView(text: self.questions[questionNumber].text ?? "")
                     .opacity(opacityAmount)
                     .offset(self.isSelected ? .zero : dragAmount)
                     .gesture(DragGesture().onChanged {
@@ -121,7 +138,7 @@ struct EducationView: View {
                             self.isTrue = 0
                             self.isSelected = true
                             
-                            if self.row.questions[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber].answerCount == self.chosenAnswer - 1 {
+                            if self.trueAnswerCount == self.chosenAnswer - 1 {
                                 self.isTrue = 1
                                 self.trueCount += 1
                                 self.trueLength = CGFloat((self.trueCount * 230) / (self.trueCount + self.falseCount))
@@ -145,14 +162,14 @@ struct EducationView: View {
                     .padding()
                 }
 
-                AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][2], color: getColor(answer: 3))
-                AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][3], color: getColor(answer: 4))
+                AnswerView(text: self.questions[questionNumber].thirdAnswer!, color: getColor(answer: 3))
+                AnswerView(text: self.questions[questionNumber].fourthAnswer!, color: getColor(answer: 4))
             
                 Spacer()
             
                 if self.isSelected {
                     Button(action: {
-                        if self.questionNumber + 1 == self.row.questions.count {
+                        if self.questionNumber == self.count {
                             self.isPresented = true
                         } else {
                             self.chosenAnswer = 0
@@ -170,7 +187,7 @@ struct EducationView: View {
                                 .frame(width: 200, height: 50)
                                 .foregroundColor(.cardGray)
                             
-                            Text(self.questionNumber == self.row.questions.count - 1 ? "Done" : "Continue")
+                            Text(self.questionNumber == count ? "Done" : "Continue")
                                 .foregroundColor(.white)
                                 .font(.system(size: 20))
                                 .fontWeight(.semibold)
@@ -179,7 +196,7 @@ struct EducationView: View {
                     .padding(.bottom)
                 }
             }
-            .navigationBarTitle(Text(row.title), displayMode: .inline)
+            .navigationBarTitle(Text(String(card.title!)), displayMode: .inline)
             .animation(.default)
             .sheet(isPresented: $isPresented, content: {
                 ResultView(trueCount: self.trueCount, falseCount: self.falseCount)
@@ -199,7 +216,7 @@ struct EducationView: View {
             }
         }
         
-        if self.isSelected && self.row.questions[questionNumber].answerCount == answer - 1 {
+        if self.isSelected && trueAnswerCount == answer - 1 {
             return Color.green
         }
         
@@ -207,8 +224,8 @@ struct EducationView: View {
     }
 }
 
-struct QuesitonView_Previews: PreviewProvider {
+struct EducationView_Previews: PreviewProvider {
     static var previews: some View {
-        EducationView(row: Row(title: "Basic Maths", description: "This section is for primary school students. Maybe first, second or third grades.", questions: [Question(text: "What is 2 + 2?", answerCount: 0), Question(text: "What is 2 + 2?", answerCount: 0)], answers: [[Answer(text: "4"), Answer(text: "3"), Answer(text: "2"), Answer(text: "1")], [Answer(text: "4"), Answer(text: "3"), Answer(text: "2"), Answer(text: "1")]]))
+        Text("Hello, World!")
     }
 }

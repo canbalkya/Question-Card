@@ -9,7 +9,8 @@
 import SwiftUI
 
 struct RowView: View {
-    let row: Row
+    let title: String
+    let description: String
     
     var body: some View {
         ZStack {
@@ -19,11 +20,11 @@ struct RowView: View {
                 .opacity(0.8)
             
             VStack(alignment: .leading) {
-                Text(row.title)
+                Text(title)
                     .font(.system(size: 25))
                     .bold()
                     .lineLimit(3)
-                Text(row.description)
+                Text(description)
                     .font(.system(size: 12))
                     .opacity(0.8)
                 

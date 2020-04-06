@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct QuestionView: View {
-    let question: Question
+    let text: String
     
     var body: some View {
         ZStack {
@@ -17,7 +17,7 @@ struct QuestionView: View {
                 .frame(width: 300, height: 170)
                 .foregroundColor(Color.cardGray)
             
-            Text(question.text)
+            Text(text)
                 .font(.system(size: 35))
                 .bold()
                 .foregroundColor(.white)

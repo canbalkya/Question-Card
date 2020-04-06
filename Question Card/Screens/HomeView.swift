@@ -7,20 +7,49 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct HomeView: View {
-    @State private var rows = [Row(title: "Basic Maths", description: "This section is for primary school students. Maybe first, second or third grades.", questions: [Question(text: "What is 2 + 2?", answerCount: 0), Question(text: "What is 5 + 2?", answerCount: 0), Question(text: "What is 8 + 2?", answerCount: 1)], answers: [[Answer(text: "4"), Answer(text: "3"), Answer(text: "1"), Answer(text: "2")], [Answer(text: "7"), Answer(text: "1"), Answer(text: "10"), Answer(text: "12")], [Answer(text: "1"), Answer(text: "10"), Answer(text: "12"), Answer(text: "13")]])]
     @State private var isPresented = false
+    
+    @Environment(\.managedObjectContext) var moc
+    
+    @FetchRequest(entity: Card.entity(), sortDescriptors: []) var cards: FetchedResults<Card>
+    @FetchRequest(entity: Question.entity(), sortDescriptors: []) var questions: FetchedResults<Question>
+    
+    var allQuestions: [Question] {
+        var questions = [Question]()
+        
+        for i in 0...self.questions.count - 1 {
+            let question = self.questions[i]
+            questions.append(question)
+        }
+        
+        return questions
+    }
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-                    ForEach(rows, id: \.id) { row in
-                        NavigationLink(destination: EducationView(row: row)) {
-                            RowView(row: row)
+                    if cards.count > 0 {
+                        ForEach(cards, id: \.id) { card in
+                            NavigationLink(destination: EducationView(card: card, questions: self.allQuestions, count: self.cards.count)) {
+                                RowView(title: card.title!, description: card.des!)
+                            }
                         }
+                    } else {
+                        Text("It is empty.")
+                            .fontWeight(.bold)
+                            .font(.system(size: 30))
+                            .padding(.top, 200)
+                        
+                        Image(systemName: "pause.circle.fill")
+                            .font(.system(size: 50))
                     }
+                }
+                .onAppear {
+                    print(self.cards.count)
                 }
             }
             .navigationBarTitle("Question Card")
@@ -29,10 +58,11 @@ struct HomeView: View {
             }) {
                 Image(systemName: "plus")
                     .foregroundColor(.primary)
-                    .font(.system(size: 24))
+                    .font(.system(size: 23))
             })
             .sheet(isPresented: $isPresented, content: {
                 CreateView()
+                    .environment(\.managedObjectContext, self.moc)
             })
         }
     }
