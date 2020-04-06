@@ -164,6 +164,7 @@ struct EducationView: View {
                             self.isPresented = true
                         } else {
                             self.chosenAnswer = 0
+                            self.isTrue = 0
                             self.questionNumber += 1
                             self.isSelected = false
                         }
@@ -177,6 +178,7 @@ struct EducationView: View {
                             Text(self.questionNumber == self.row.questions.count - 1 ? "Done" : "Continue")
                                 .foregroundColor(.white)
                                 .font(.system(size: 20))
+                                .fontWeight(.semibold)
                         }
                     }
                     .padding(.bottom)

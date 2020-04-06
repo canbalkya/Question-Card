@@ -12,51 +12,60 @@ struct ResultView: View {
     var trueCount: Int
     var falseCount: Int
     
-    @State private var trueHeight = 0
-    @State private var falseHeight = 0
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("You are amazing!")
-                .font(.largeTitle)
+        VStack {
+            Spacer()
+                .frame(height: 70)
+            
+            Text(getTitleText())
+                .font(.system(size: 45))
+                .fontWeight(.heavy)
             
             Spacer()
-                .frame(minHeight: 50, maxHeight: 150)
             
-            HStack {
-                ZStack(alignment: .trailing) {
-                    Rectangle()
-                        .cornerRadius(12)
-                        .foregroundColor(Color.green)
-                        .frame(width: trueCount + falseCount == 0 ? 0 : CGFloat((280 * trueCount) / (trueCount + falseCount)), height: 40)
+            VStack(alignment: .leading) {
+                HStack {
+                    ZStack(alignment: .trailing) {
+                        Rectangle()
+                            .cornerRadius(12)
+                            .foregroundColor(Color.green)
+                            .frame(width: trueCount == 0 ? 40 : CGFloat((310 * trueCount) / (trueCount + falseCount)), height: 45)
+                        
+                        Text(String(trueCount))
+                            .font(.system(size: 20))
+                            .foregroundColor(.white)
+                            .padding(.trailing, 10)
+                    }
                     
-                    Text(String(trueCount))
-                        .foregroundColor(.white)
-                        .padding(.trailing, 10)
+                    Text("true")
+                        .font(.system(size: 24))
                 }
                 
-                Text("true")
-            }.animation(.spring())
-            
-            HStack {
-                ZStack(alignment: .trailing) {
-                    Rectangle()
-                        .cornerRadius(12)
-                        .foregroundColor(Color.red)
-                        .frame(width: trueCount + falseCount == 0 ? 0 : CGFloat((280 * falseCount) / (trueCount + falseCount)), height: 40)
+                HStack {
+                    ZStack(alignment: .trailing) {
+                        Rectangle()
+                            .cornerRadius(12)
+                            .foregroundColor(Color.red)
+                            .frame(width: falseCount == 0 ? 40 : CGFloat((310 * falseCount) / (trueCount + falseCount)), height: 45)
+                        
+                        Text(String(falseCount))
+                            .font(.system(size: 20))
+                            .foregroundColor(.white)
+                            .padding(.trailing, 10)
+                    }
                     
-                    Text(String(falseCount))
-                        .foregroundColor(.white)
-                        .padding(.trailing, 10)
+                    Text("false")
+                        .font(.system(size: 24))
+                    
+                    Spacer()
                 }
-                
-                Text("false")
-            }.animation(.spring())
+            }
+            .padding(.leading, -10)
+            .animation(.spring())
             
             Spacer()
-                .frame(minHeight: 50, maxHeight: 150)
             
             Button(action: {
                 self.presentationMode.wrappedValue.dismiss()
@@ -69,8 +78,25 @@ struct ResultView: View {
                     
                     Text("Return")
                         .foregroundColor(.white)
+                        .font(.system(size: 24))
+                        .fontWeight(.semibold)
                 }
             }
+            
+            Spacer()
+        }
+    }
+    
+    func getTitleText() -> String {
+        switch trueCount - falseCount {
+        case -falseCount...0:
+            return "You should try again. 💫"
+        case 0...trueCount / 2:
+            return "Not bad, Darlin. 🙃"
+        case trueCount / 2...trueCount:
+            return "You are amazing! 💪"
+        default:
+            return ""
         }
     }
 }
