@@ -12,6 +12,7 @@
 		3A2BDB05243691D900EC2D5D /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDB04243691D900EC2D5D /* Row.swift */; };
 		3A2BDB072436921F00EC2D5D /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDB062436921F00EC2D5D /* QuestionView.swift */; };
 		3A2BDB092436923500EC2D5D /* AnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDB082436923500EC2D5D /* AnswerView.swift */; };
+		3A3ED390243B586C006B8FC9 /* Question Card.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED38E243B586C006B8FC9 /* Question Card.xcdatamodeld */; };
 		3A3FA3192437867C00299EE4 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3FA3182437867C00299EE4 /* Question.swift */; };
 		3A3FA31B2437874C00299EE4 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3FA31A2437874C00299EE4 /* Answer.swift */; };
 		3A4A85A42426B9E200F0A63F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4A85A32426B9E200F0A63F /* AppDelegate.swift */; };
@@ -31,6 +32,7 @@
 		3A2BDB04243691D900EC2D5D /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
 		3A2BDB062436921F00EC2D5D /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
 		3A2BDB082436923500EC2D5D /* AnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerView.swift; sourceTree = "<group>"; };
+		3A3ED38F243B586C006B8FC9 /* Question Card.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Question Card.xcdatamodel"; sourceTree = "<group>"; };
 		3A3FA3182437867C00299EE4 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		3A3FA31A2437874C00299EE4 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		3A4A85A02426B9E200F0A63F /* Question Card.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Question Card.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +67,7 @@
 				3A4A85A92426B9E400F0A63F /* Assets.xcassets */,
 				3A4A85AE2426B9E400F0A63F /* LaunchScreen.storyboard */,
 				3A4A85B12426B9E400F0A63F /* Info.plist */,
+				3A3ED38E243B586C006B8FC9 /* Question Card.xcdatamodeld */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				3A2BDB022436917B00EC2D5D /* RowView.swift in Sources */,
 				3A2BDAFE243690D200EC2D5D /* Color Extension.swift in Sources */,
 				3A2BDB05243691D900EC2D5D /* Row.swift in Sources */,
+				3A3ED390243B586C006B8FC9 /* Question Card.xcdatamodeld in Sources */,
 				3AD59ACA2438AB3600771B35 /* CreateView.swift in Sources */,
 				3A4A85BA2426BA7900F0A63F /* ResultView.swift in Sources */,
 				3A4A85A62426B9E200F0A63F /* SceneDelegate.swift in Sources */,
@@ -422,6 +426,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3A3ED38E243B586C006B8FC9 /* Question Card.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3A3ED38F243B586C006B8FC9 /* Question Card.xcdatamodel */,
+			);
+			currentVersion = 3A3ED38F243B586C006B8FC9 /* Question Card.xcdatamodel */;
+			path = "Question Card.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3A4A85982426B9E200F0A63F /* Project object */;
 }
