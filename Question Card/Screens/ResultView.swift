@@ -30,7 +30,7 @@ struct ResultView: View {
                     Rectangle()
                         .cornerRadius(12)
                         .foregroundColor(Color.green)
-                        .frame(width: CGFloat((280 * trueCount) / (trueCount + falseCount)), height: 40)
+                        .frame(width: trueCount + falseCount == 0 ? 0 : CGFloat((280 * trueCount) / (trueCount + falseCount)), height: 40)
                     
                     Text(String(trueCount))
                         .foregroundColor(.white)
@@ -45,7 +45,7 @@ struct ResultView: View {
                     Rectangle()
                         .cornerRadius(12)
                         .foregroundColor(Color.red)
-                        .frame(width: CGFloat((280 * falseCount) / (trueCount + falseCount)), height: 40)
+                        .frame(width: trueCount + falseCount == 0 ? 0 : CGFloat((280 * falseCount) / (trueCount + falseCount)), height: 40)
                     
                     Text(String(falseCount))
                         .foregroundColor(.white)
