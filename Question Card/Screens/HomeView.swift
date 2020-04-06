@@ -17,24 +17,13 @@ struct HomeView: View {
     @FetchRequest(entity: Card.entity(), sortDescriptors: []) var cards: FetchedResults<Card>
     @FetchRequest(entity: Question.entity(), sortDescriptors: []) var questions: FetchedResults<Question>
     
-    var allQuestions: [Question] {
-        var questions = [Question]()
-        
-        for i in 0...self.questions.count - 1 {
-            let question = self.questions[i]
-            questions.append(question)
-        }
-        
-        return questions
-    }
-    
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
                     if cards.count > 0 {
                         ForEach(cards, id: \.id) { card in
-                            NavigationLink(destination: EducationView(card: card, questions: self.allQuestions, count: self.cards.count)) {
+                            NavigationLink(destination: EducationView(card: card, questions: self.getQuestions(index: Int(card.index)), count: self.cards.count)) {
                                 RowView(title: card.title!, description: card.des!)
                             }
                         }
@@ -65,6 +54,18 @@ struct HomeView: View {
                     .environment(\.managedObjectContext, self.moc)
             })
         }
+    }
+    
+    func getQuestions(index: Int) -> [Question] {
+        print("Intext: \(index)")
+        var questions = [Question]()
+        
+        for i in (index * 3)...(index * 3 + 2) {
+            let question = self.questions[i]
+            questions.append(question)
+        }
+        
+        return questions
     }
 }
 

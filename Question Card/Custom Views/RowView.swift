@@ -13,10 +13,10 @@ struct RowView: View {
     let description: String
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 15)
                 .frame(width: 340, height: 100)
-                .foregroundColor(.init(red: 68 / 255, green: 68 / 255, blue: 68 / 255))
+                .foregroundColor(.answerGray)
                 .opacity(0.8)
             
             VStack(alignment: .leading) {
@@ -31,8 +31,9 @@ struct RowView: View {
                 Spacer()
                     .frame(height: 15)
             }
+            .padding([.leading, .trailing])
             .foregroundColor(.white)
         }
-        .padding([.leading, .trailing, .top])
+        .padding(.top)
     }
 }

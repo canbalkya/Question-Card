@@ -51,7 +51,7 @@ struct EducationView: View {
                         .frame(width: 40, height: 40)
                         .opacity(0.8)
                     
-                    Text(String(count == questionNumber ? count : questionNumber + 1))
+                    Text(String(questionNumber + 1))
                         .foregroundColor(.white)
                 }
                 
@@ -89,7 +89,7 @@ struct EducationView: View {
             
             Spacer()
             
-            AnswerView(text: self.questions[questionNumber].firstAnswer!/*String(question.firstAnswer![self.questionNumber == count ? count - 1 : self.questionNumber])*/, color: getColor(answer: 1))
+            AnswerView(text: self.questions[questionNumber].firstAnswer!, color: getColor(answer: 1))
             AnswerView(text: self.questions[questionNumber].secondAnswer!, color: getColor(answer: 2))
 
             if !self.isGiveUp {
@@ -138,7 +138,7 @@ struct EducationView: View {
                             self.isTrue = 0
                             self.isSelected = true
                             
-                            if self.trueAnswerCount == self.chosenAnswer - 1 {
+                            if self.trueAnswerCount == self.chosenAnswer {
                                 self.isTrue = 1
                                 self.trueCount += 1
                                 self.trueLength = CGFloat((self.trueCount * 230) / (self.trueCount + self.falseCount))
@@ -169,7 +169,7 @@ struct EducationView: View {
             
                 if self.isSelected {
                     Button(action: {
-                        if self.questionNumber == self.count {
+                        if self.questionNumber - 1 == self.count {
                             self.isPresented = true
                         } else {
                             self.chosenAnswer = 0
@@ -216,7 +216,7 @@ struct EducationView: View {
             }
         }
         
-        if self.isSelected && trueAnswerCount == answer - 1 {
+        if self.isSelected && trueAnswerCount == answer {
             return Color.green
         }
         

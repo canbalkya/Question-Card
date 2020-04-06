@@ -20,8 +20,10 @@ struct CreateView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
+    @FetchRequest(entity: Card.entity(), sortDescriptors: []) var cards: FetchedResults<Card>
+    
     static let trueAnswers = ["First", "Second", "Third", "Fourth"]
-    let count = (0...1)
+    let count = (0...2)
     
     var body: some View {
         NavigationView {
@@ -59,6 +61,7 @@ struct CreateView: View {
                         card.id = UUID()
                         card.title = self.title
                         card.des = self.description
+                        card.index = Int16(self.cards.count)
                         
                         for i in self.count {
                             let question = Question(context: self.moc)

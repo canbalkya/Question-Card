@@ -18,8 +18,7 @@ struct QuestionView: View {
                 .foregroundColor(Color.cardGray)
             
             Text(text)
-                .font(.system(size: 35))
-                .bold()
+                .font(.system(size: 30))
                 .foregroundColor(.white)
         }
     }

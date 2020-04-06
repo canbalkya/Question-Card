@@ -20,8 +20,7 @@ struct AnswerView: View {
                 .animation(.default)
             
             Text(text)
-                .font(.system(size: 30))
-                .bold()
+                .font(.system(size: 20))
                 .foregroundColor(.white)
         }
     }
