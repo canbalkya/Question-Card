@@ -27,7 +27,7 @@ struct EducationView: View {
     
     var body: some View {
         VStack {
-            HStack() {
+            HStack {
                 ZStack {
                     Rectangle()
                         .cornerRadius(12)
@@ -63,7 +63,9 @@ struct EducationView: View {
                         .padding(.leading, 10)
                 }
             }
-            .padding(.bottom)
+            .padding(.top)
+            
+            Spacer()
             
             AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][0], color: getColor(answer: 1))
             AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][1], color: getColor(answer: 2))
@@ -146,12 +148,15 @@ struct EducationView: View {
 
                 AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][2], color: getColor(answer: 3))
                 AnswerView(answer: row.answers[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber][3], color: getColor(answer: 4))
+            
+                Spacer()
             }
             .navigationBarTitle(Text(row.title), displayMode: .inline)
             .animation(.default)
             .sheet(isPresented: $isPresented, content: {
                 ResultView(trueCount: 5, falseCount: 3)
-            })
+            }
+        )
     }
     
     public func getColor(answer: Int) -> Color {
