@@ -50,7 +50,7 @@ struct EducationView: View {
                         .opacity(0.8)
                         .animation(.spring())
                     
-                    Text(String(trueCount))
+                    Text(trueCount == 0 && trueCount + falseCount != 0 ? "" : String(trueCount))
                         .foregroundColor(.white)
                         .padding(.trailing, 10)
                 }
@@ -63,7 +63,7 @@ struct EducationView: View {
                         .opacity(0.8)
                         .animation(.spring())
                     
-                    Text(String(falseCount))
+                    Text(falseCount == 0 && trueCount + falseCount != 0 ? "" : String(falseCount))
                         .foregroundColor(.white)
                         .padding(.leading, 10)
                 }
@@ -136,13 +136,13 @@ struct EducationView: View {
                             if self.row.questions[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber - 1].answerCount == self.chosenAnswer - 1 {
                                 self.isTrue = 1
                                 self.trueCount += 1
-                                self.trueLength = CGFloat((self.trueCount * 115) / (self.trueCount + self.falseCount))
-                                self.falseLength = CGFloat((self.falseCount * 115) / (self.trueCount + self.falseCount))
+                                self.trueLength = CGFloat((self.trueCount * 230) / (self.trueCount + self.falseCount))
+                                self.falseLength = CGFloat((self.falseCount * 230) / (self.trueCount + self.falseCount))
                             } else {
                                 self.isTrue = 2
                                 self.falseCount += 1
-                                self.trueLength = CGFloat((self.trueCount * 115) / (self.trueCount + self.falseCount))
-                                self.falseLength = CGFloat((self.falseCount * 115) / (self.trueCount + self.falseCount))
+                                self.trueLength = CGFloat((self.trueCount * 230) / (self.trueCount + self.falseCount))
+                                self.falseLength = CGFloat((self.falseCount * 230) / (self.trueCount + self.falseCount))
                             }
                         }
                         
