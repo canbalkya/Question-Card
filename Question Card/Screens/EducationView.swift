@@ -17,12 +17,15 @@ struct EducationView: View {
     @State private var chosenAnswer = 0
     @State private var isGiveUp = false
     @State private var isTrue = 0
-    @State private var seconds: Int = 0
+    @State private var seconds = 0
     @State private var dragCount = 0
     @State private var questionNumber = 0
     @State private var isPresented = false
+    @State private var isSelected = false
     @State private var trueCount = 0
     @State private var falseCount = 0
+    @State private var trueLength: CGFloat = 115
+    @State private var falseLength: CGFloat = 115
 //    @State private var isStart = false
     
     var body: some View {
@@ -43,8 +46,9 @@ struct EducationView: View {
                     Rectangle()
                         .cornerRadius(12)
                         .foregroundColor(Color.green)
-                        .frame(width: 115, height: 40)
+                        .frame(width: trueLength, height: 40)
                         .opacity(0.8)
+                        .animation(.spring())
                     
                     Text(String(trueCount))
                         .foregroundColor(.white)
@@ -55,10 +59,11 @@ struct EducationView: View {
                     Rectangle()
                         .cornerRadius(12)
                         .foregroundColor(Color.red)
-                        .frame(width: 115, height: 40)
+                        .frame(width: falseLength, height: 40)
                         .opacity(0.8)
+                        .animation(.spring())
                     
-                    Text(String(trueCount))
+                    Text(String(falseCount))
                         .foregroundColor(.white)
                         .padding(.leading, 10)
                 }
@@ -108,7 +113,7 @@ struct EducationView: View {
                             self.isGiveUp = true
                         }
                     }.onEnded { view in
-                        guard self.questionNumber < self.row.questions.count else { return }
+//                        guard self.questionNumber < self.row.questions.count else { return }
                         
                         if !self.isGiveUp {
                             withAnimation(.spring()) {
@@ -126,11 +131,18 @@ struct EducationView: View {
                             self.isTrue = 0
                             self.dragCount += 1
                             self.questionNumber += 1
+                            self.isSelected = true
                             
-                            if self.row.questions[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber].answerCount == self.chosenAnswer - 1 {
+                            if self.row.questions[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber - 1].answerCount == self.chosenAnswer - 1 {
                                 self.isTrue = 1
+                                self.trueCount += 1
+                                self.trueLength = CGFloat((self.trueCount * 115) / (self.trueCount + self.falseCount))
+                                self.falseLength = CGFloat((self.falseCount * 115) / (self.trueCount + self.falseCount))
                             } else {
                                 self.isTrue = 2
+                                self.falseCount += 1
+                                self.trueLength = CGFloat((self.trueCount * 115) / (self.trueCount + self.falseCount))
+                                self.falseLength = CGFloat((self.falseCount * 115) / (self.trueCount + self.falseCount))
                             }
                         }
                         
@@ -154,7 +166,7 @@ struct EducationView: View {
             .navigationBarTitle(Text(row.title), displayMode: .inline)
             .animation(.default)
             .sheet(isPresented: $isPresented, content: {
-                ResultView(trueCount: 5, falseCount: 3)
+                ResultView(trueCount: self.trueCount, falseCount: self.falseCount)
             }
         )
     }
@@ -171,7 +183,9 @@ struct EducationView: View {
             }
         }
         
-        if /* self.isStart && */ self.dragCount != self.questionNumber && self.row.questions[questionNumber].answerCount == answer - 1 /* || self.isGiveUp && answer - 1 == self.row.trueAnswersCount */ {
+        print(questionNumber)
+        
+        if /* self.isStart && */ self.isSelected && self.row.questions[questionNumber - 1].answerCount == answer - 1 /* || self.isGiveUp && answer - 1 == self.row.trueAnswersCount */ {
             return Color.green
         }
         
