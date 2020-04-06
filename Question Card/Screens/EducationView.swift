@@ -42,30 +42,34 @@ struct EducationView: View {
                         .foregroundColor(.white)
                 }
                 
-                ZStack(alignment: .trailing) {
-                    Rectangle()
-                        .cornerRadius(12)
-                        .foregroundColor(Color.green)
-                        .frame(width: trueLength, height: 40)
-                        .opacity(0.8)
-                        .animation(.spring())
+                if (trueCount != 0 && trueCount + falseCount != 0) || (trueCount == 0 && trueCount + falseCount == 0) {
+                    ZStack(alignment: .trailing) {
+                        Rectangle()
+                            .cornerRadius(12)
+                            .foregroundColor(Color.green)
+                            .frame(width: trueLength, height: 40)
+                            .opacity(0.8)
+                            .animation(.spring())
                     
-                    Text(trueCount == 0 && trueCount + falseCount != 0 ? "" : String(trueCount))
-                        .foregroundColor(.white)
-                        .padding(.trailing, 10)
+                        Text(String(trueCount))
+                            .foregroundColor(.white)
+                            .padding(.trailing, 10)
+                    }
                 }
                 
-                ZStack(alignment: .leading) {
-                    Rectangle()
-                        .cornerRadius(12)
-                        .foregroundColor(Color.red)
-                        .frame(width: falseLength, height: 40)
-                        .opacity(0.8)
-                        .animation(.spring())
+                if (falseCount != 0 && trueCount + falseCount != 0) || (falseCount == 0 && trueCount + falseCount == 0) {
+                    ZStack(alignment: .leading) {
+                        Rectangle()
+                            .cornerRadius(12)
+                            .foregroundColor(Color.red)
+                            .frame(width: falseLength, height: 40)
+                            .opacity(0.8)
+                            .animation(.spring())
                     
-                    Text(falseCount == 0 && trueCount + falseCount != 0 ? "" : String(falseCount))
-                        .foregroundColor(.white)
-                        .padding(.leading, 10)
+                        Text(falseCount == 0 && trueCount + falseCount != 0 ? "" : String(falseCount))
+                            .foregroundColor(.white)
+                            .padding(.leading, 10)
+                    }
                 }
             }
             .padding(.top)
