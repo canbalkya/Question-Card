@@ -137,17 +137,9 @@ struct EducationView: View {
                         if self.isGiveUp {
                             self.isSelected = true
                             
-                            if self.row.questions[self.questionNumber == self.row.questions.count ? self.row.questions.count - 1 : self.questionNumber - 1].answerCount == self.chosenAnswer - 1 {
-                                self.isTrue = 1
-                                self.trueCount += 1
-                                self.trueLength = CGFloat((self.trueCount * 230) / (self.trueCount + self.falseCount))
-                                self.falseLength = CGFloat((self.falseCount * 230) / (self.trueCount + self.falseCount))
-                            } else {
-                                self.isTrue = 2
-                                self.falseCount += 1
-                                self.trueLength = CGFloat((self.trueCount * 230) / (self.trueCount + self.falseCount))
-                                self.falseLength = CGFloat((self.falseCount * 230) / (self.trueCount + self.falseCount))
-                            }
+                            self.isTrue = 1
+                            self.trueLength = CGFloat((self.trueCount * 230) / (self.trueCount + self.falseCount))
+                            self.falseLength = CGFloat((self.falseCount * 230) / (self.trueCount + self.falseCount))
                         }
                     })
                     .padding()
@@ -167,6 +159,9 @@ struct EducationView: View {
                             self.isTrue = 0
                             self.questionNumber += 1
                             self.isSelected = false
+                            self.isGiveUp = false
+                            self.opacityAmount = 1
+                            self.dragAmount = .zero
                         }
                     }) {
                         ZStack {
