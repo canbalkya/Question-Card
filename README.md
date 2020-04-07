@@ -8,4 +8,4 @@ Question Card is an application that you can create and solve a test related to 
 
 &nbsp;
 
-Copyright © 2020 TurkishKit — Tüm Hakları Saklıdır
+Copyright © 2020 Can Balkaya — All Rights Reserved
