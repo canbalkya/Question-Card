@@ -28,13 +28,13 @@ struct EducationView: View {
     
     var count: Int
     var trueAnswerCount: Int {
-        if self.questions[questionNumber].trueAnswerCount == "First" {
+        if self.questions[self.questionNumber].trueAnswerCount == "First" {
             return 1
-        } else if self.questions[questionNumber].trueAnswerCount == "Second" {
+        } else if self.questions[self.questionNumber].trueAnswerCount == "Second" {
             return 2
-        } else if self.questions[questionNumber].trueAnswerCount == "Third" {
+        } else if self.questions[self.questionNumber].trueAnswerCount == "Third" {
             return 3
-        } else if self.questions[questionNumber].trueAnswerCount == "Fourth" {
+        } else if self.questions[self.questionNumber].trueAnswerCount == "Fourth" {
             return 4
         }
         
@@ -89,11 +89,11 @@ struct EducationView: View {
             
             Spacer()
             
-            AnswerView(text: self.questions[questionNumber].firstAnswer!, color: getColor(answer: 1))
-            AnswerView(text: self.questions[questionNumber].secondAnswer!, color: getColor(answer: 2))
+            AnswerView(text: self.questions[self.questionNumber].firstAnswer!, color: getColor(answer: 1))
+            AnswerView(text: self.questions[self.questionNumber].secondAnswer!, color: getColor(answer: 2))
 
             if !self.isGiveUp {
-                QuestionView(text: self.questions[questionNumber].text ?? "")
+                QuestionView(text: self.questions[self.questionNumber == 3 ? 2 : self.questionNumber].text ?? "")
                     .opacity(opacityAmount)
                     .offset(self.isSelected ? .zero : dragAmount)
                     .gesture(DragGesture().onChanged {
@@ -117,6 +117,13 @@ struct EducationView: View {
                         
                         if ($0.translation.width > 150 || $0.translation.width < -150) && ($0.translation.height > -100 && $0.translation.height < 100) {
                             self.isGiveUp = true
+                            self.isSelected = true
+                            
+                            self.falseCount += 1
+                            self.isTrue = 1
+                            
+                            self.trueLength = CGFloat((self.trueCount * 230) / (self.trueCount + self.falseCount))
+                            self.falseLength = CGFloat((self.falseCount * 230) / (self.trueCount + self.falseCount))
                         }
                     }.onEnded { view in
                         guard !self.isSelected else { return }
@@ -150,26 +157,18 @@ struct EducationView: View {
                                 self.falseLength = CGFloat((self.falseCount * 230) / (self.trueCount + self.falseCount))
                             }
                         }
-                        
-                        if self.isGiveUp {
-                            self.isSelected = true
-                            
-                            self.isTrue = 1
-                            self.trueLength = CGFloat((self.trueCount * 230) / (self.trueCount + self.falseCount))
-                            self.falseLength = CGFloat((self.falseCount * 230) / (self.trueCount + self.falseCount))
-                        }
                     })
                     .padding()
                 }
 
-                AnswerView(text: self.questions[questionNumber].thirdAnswer!, color: getColor(answer: 3))
-                AnswerView(text: self.questions[questionNumber].fourthAnswer!, color: getColor(answer: 4))
+                AnswerView(text: self.questions[self.questionNumber].thirdAnswer!, color: getColor(answer: 3))
+                AnswerView(text: self.questions[self.questionNumber].fourthAnswer!, color: getColor(answer: 4))
             
                 Spacer()
             
                 if self.isSelected {
                     Button(action: {
-                        if self.questionNumber - 1 == self.count {
+                        if self.questionNumber + 1 == self.count {
                             self.isPresented = true
                         } else {
                             self.chosenAnswer = 0
@@ -187,7 +186,7 @@ struct EducationView: View {
                                 .frame(width: 200, height: 50)
                                 .foregroundColor(.cardGray)
                             
-                            Text(self.questionNumber - 1 == count ? "Done" : "Continue")
+                            Text(self.questionNumber + 1 == count ? "Done" : "Continue")
                                 .foregroundColor(.white)
                                 .font(.system(size: 20))
                                 .fontWeight(.semibold)
@@ -216,7 +215,7 @@ struct EducationView: View {
             }
         }
         
-        if self.isSelected && trueAnswerCount == answer {
+        if (self.isSelected || self.isGiveUp) && trueAnswerCount == answer {
             return Color.green
         }
         

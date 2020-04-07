@@ -12,9 +12,9 @@ import CoreData
 struct CreateView: View {
     @State private var title = ""
     @State private var description = ""
-    @State private var questions = ["", "", "", "", "", "", "", "", "", ""]
-    @State private var answers = [["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""]]
-    @State private var trueAnswer = ["First", "First", "First", "First", "First", "First", "First", "First", "First", "First"]
+    @State private var questions = ["", "", ""]
+    @State private var answers = [["", "", "", ""], ["", "", "", ""], ["", "", "", ""]]
+    @State private var trueAnswer = ["First", "First", "First"]
     @State private var showingAlert = false
     
     @Environment(\.managedObjectContext) var moc
@@ -72,12 +72,13 @@ struct CreateView: View {
                             question.thirdAnswer = self.answers[i][2]
                             question.fourthAnswer = self.answers[i][3]
                             question.trueAnswerCount = self.trueAnswer[i]
+                            question.card = card.id
                         }
                         
                         do {
                             try self.moc.save()
                         } catch {
-                            print(error)
+                            
                         }
                         
                         self.presentationMode.wrappedValue.dismiss()

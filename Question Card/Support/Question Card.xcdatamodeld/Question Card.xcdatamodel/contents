@@ -7,6 +7,7 @@
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Question" representedClassName="Question" syncable="YES" codeGenerationType="class">
+        <attribute name="card" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="firstAnswer" optional="YES" attributeType="String"/>
         <attribute name="fourthAnswer" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -17,6 +18,6 @@
     </entity>
     <elements>
         <element name="Card" positionX="-27" positionY="18" width="128" height="103"/>
-        <element name="Question" positionX="18" positionY="63" width="128" height="148"/>
+        <element name="Question" positionX="18" positionY="63" width="128" height="163"/>
     </elements>
 </model>

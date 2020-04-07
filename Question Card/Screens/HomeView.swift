@@ -23,7 +23,7 @@ struct HomeView: View {
                 VStack {
                     if cards.count > 0 {
                         ForEach(cards, id: \.id) { card in
-                            NavigationLink(destination: EducationView(card: card, questions: self.getQuestions(index: Int(card.index)), count: self.cards.count)) {
+                            NavigationLink(destination: EducationView(card: card, questions: self.getQuestions(index: Int(card.index), card: card), count: 3)) {
                                 RowView(title: card.title!, description: card.des!)
                             }
                         }
@@ -36,9 +36,6 @@ struct HomeView: View {
                         Image(systemName: "pause.circle.fill")
                             .font(.system(size: 50))
                     }
-                }
-                .onAppear {
-                    print(self.cards.count)
                 }
             }
             .navigationBarTitle("Question Card")
@@ -56,16 +53,16 @@ struct HomeView: View {
         }
     }
     
-    func getQuestions(index: Int) -> [Question] {
-        print("Intext: \(index)")
-        var questions = [Question]()
+    func getQuestions(index: Int, card: Card) -> [Question] {
+        var currentQuestions = [Question]()
         
-        for i in (index * 3)...(index * 3 + 2) {
-            let question = self.questions[i]
-            questions.append(question)
+        for i in 0...questions.count - 1 {
+            if questions[i].card == card.id {
+                currentQuestions.append(questions[i])
+            }
         }
         
-        return questions
+        return currentQuestions.shuffled()
     }
 }
 
