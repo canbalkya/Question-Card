@@ -11,6 +11,8 @@ import SwiftUI
 struct ResultView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
+    @State private var startingAnimation = false
+    
     var trueCount: Int
     var falseCount: Int
     
@@ -34,7 +36,7 @@ struct ResultView: View {
                         Rectangle()
                             .cornerRadius(12)
                             .foregroundColor(Color.green)
-                            .frame(width: trueCount == 0 ? 40 : CGFloat((310 * trueCount) / (trueCount + falseCount)), height: 45)
+                            .frame(width: getResult(count: trueCount), height: 45)
                         
                         Text(String(trueCount))
                             .fontWeight(.semibold)
@@ -52,7 +54,7 @@ struct ResultView: View {
                         Rectangle()
                             .cornerRadius(12)
                             .foregroundColor(Color.red)
-                            .frame(width: falseCount == 0 ? 40 : CGFloat((310 * falseCount) / (trueCount + falseCount)), height: 45)
+                            .frame(width: getResult(count: falseCount), height: 45)
                         
                         Text(String(falseCount))
                             .fontWeight(.semibold)
@@ -90,6 +92,9 @@ struct ResultView: View {
             
             Spacer()
         }
+        .onAppear {
+            self.startingAnimation = true
+        }
     }
     
     func getTitleText() -> String {
@@ -103,6 +108,18 @@ struct ResultView: View {
         default:
             return ""
         }
+    }
+    
+    func getResult(count: Int) -> CGFloat {
+        if startingAnimation {
+            if count == 0 {
+                return 40
+            }
+            
+            return CGFloat((310 * count) / (trueCount + falseCount))
+        }
+        
+        return 0
     }
 }
 
