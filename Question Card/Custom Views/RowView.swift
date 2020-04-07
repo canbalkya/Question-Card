@@ -13,7 +13,7 @@ struct RowView: View {
     let description: String
     
     private let widthConstant: CGFloat = 1.1
-    private let heightConstant: CGFloat = 9
+    private let heightConstant: CGFloat = 8
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -35,7 +35,7 @@ struct RowView: View {
                 
                 Spacer()
             }
-                .padding([.leading, .trailing])
+            .padding([.leading, .trailing])
             .frame(width: UIScreen.main.bounds.width / widthConstant, height: UIScreen.main.bounds.height / heightConstant)
             .foregroundColor(.white)
         }

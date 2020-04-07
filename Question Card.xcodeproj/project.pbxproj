@@ -88,9 +88,9 @@
 		3A2BDB002436915A00EC2D5D /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				3A2BDB012436917B00EC2D5D /* RowView.swift */,
 				3A2BDB062436921F00EC2D5D /* QuestionView.swift */,
 				3A2BDB082436923500EC2D5D /* AnswerView.swift */,
-				3A2BDB012436917B00EC2D5D /* RowView.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -357,6 +357,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "CanBalkaya.Question-Card";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -377,6 +378,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "CanBalkaya.Question-Card";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
