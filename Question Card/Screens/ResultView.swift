@@ -9,19 +9,22 @@
 import SwiftUI
 
 struct ResultView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     var trueCount: Int
     var falseCount: Int
     
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    private let heightConstant: CGFloat = 20
     
     var body: some View {
         VStack {
             Spacer()
-                .frame(height: 70)
+                .frame(height: UIScreen.main.bounds.height / heightConstant)
             
             Text(getTitleText())
                 .font(.system(size: 45))
                 .fontWeight(.heavy)
+                .padding()
             
             Spacer()
             

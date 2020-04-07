@@ -12,28 +12,33 @@ struct RowView: View {
     let title: String
     let description: String
     
+    private let widthConstant: CGFloat = 1.1
+    private let heightConstant: CGFloat = 9
+    
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 15)
-                .frame(width: 340, height: 100)
+                .frame(width: UIScreen.main.bounds.width / widthConstant, height: UIScreen.main.bounds.height / heightConstant)
                 .foregroundColor(.answerGray)
                 .opacity(0.8)
             
-            VStack(alignment: .leading) {
-                Text(title)
-                    .font(.system(size: 25))
-                    .bold()
-                    .lineLimit(3)
-                Text(description)
-                    .font(.system(size: 12))
-                    .opacity(0.8)
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(title)
+                        .font(.system(size: 25))
+                        .bold()
+                        .lineLimit(3)
+                    Text(description)
+                        .font(.system(size: 12))
+                        .opacity(0.8)
+                }
                 
                 Spacer()
-                    .frame(height: 15)
             }
-            .padding([.leading, .trailing])
+                .padding([.leading, .trailing])
+            .frame(width: UIScreen.main.bounds.width / widthConstant, height: UIScreen.main.bounds.height / heightConstant)
             .foregroundColor(.white)
         }
-        .padding(.top)
+        .padding([.leading, .trailing, .top])
     }
 }

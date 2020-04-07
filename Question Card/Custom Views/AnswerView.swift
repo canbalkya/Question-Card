@@ -12,16 +12,20 @@ struct AnswerView: View {
     let text: String
     var color: Color
     
+    private let widthConstant: CGFloat = 1.4
+    private let heightConstant: CGFloat = 13
+    
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 16)
-                .frame(width: 270, height: 60)
+            RoundedRectangle(cornerRadius: 20)
+                .frame(width: UIScreen.main.bounds.width / widthConstant, height: UIScreen.main.bounds.height / heightConstant)
                 .foregroundColor(color)
                 .animation(.default)
             
             Text(text)
-                .font(.system(size: 20))
+                .font(.system(size: 24))
                 .foregroundColor(.white)
+                .frame(width: UIScreen.main.bounds.width / (widthConstant + 0.05), height: UIScreen.main.bounds.height / heightConstant)
         }
     }
 }
