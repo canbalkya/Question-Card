@@ -187,7 +187,7 @@ struct EducationView: View {
                                 .frame(width: 200, height: 50)
                                 .foregroundColor(.cardGray)
                             
-                            Text(self.questionNumber == count ? "Done" : "Continue")
+                            Text(self.questionNumber - 1 == count ? "Done" : "Continue")
                                 .foregroundColor(.white)
                                 .font(.system(size: 20))
                                 .fontWeight(.semibold)
