@@ -76,6 +76,7 @@ struct ResultView: View {
             
             Button(action: {
                 self.presentationMode.wrappedValue.dismiss()
+                self.startingAnimation.toggle()
             }) {
                 ZStack {
                     Rectangle()
@@ -93,7 +94,7 @@ struct ResultView: View {
             Spacer()
         }
         .onAppear {
-            self.startingAnimation = true
+            self.startingAnimation.toggle()
         }
     }
     
