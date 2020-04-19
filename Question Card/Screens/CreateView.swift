@@ -37,10 +37,9 @@ struct CreateView: View {
                     Section(header: Text("\(number + 1). Question")) {
                         TextField("Question", text: self.$questions[number])
 
-                        TextField("Answer", text: self.$answers[number][0])
-                        TextField("Answer", text: self.$answers[number][1])
-                        TextField("Answer", text: self.$answers[number][2])
-                        TextField("Answer", text: self.$answers[number][3])
+                        ForEach(0...3, id: \.self) { i in
+                            TextField("Answer", text: self.$answers[number][i])
+                        }
                         
                         Picker("True Answer", selection: self.$trueAnswer[number]) {
                             ForEach(Self.trueAnswers, id: \.self) {
